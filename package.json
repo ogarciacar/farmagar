@@ -1,0 +1,12 @@
+{
+  "name": "inventory",
+  "version": "0.0.1",
+  "description": "Simple inventory tracker system",
+  "author": "Orlando Garcia <orlando.garcia@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "angular": "^1.4.5",
+    "bootstrap": "^3.3.5",
+    "express": "~4.13.3"
+  }
+}
