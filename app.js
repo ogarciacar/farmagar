@@ -1,5 +1,9 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');	
+var parseUrlencoded = bodyParser.urlencoded({ extended: true }); // for parsing       application/x-www-form-urlencoded
+
+app.use(bodyParser.json()); // for parsing application/json
 
 app.use(express.static('public'));
 
@@ -160,7 +164,7 @@ var products = [
                     qty: 26
                 }
             ]
-        },
+        }/*,
         {
             name: "COLECTOR DE ORINA PEDIATRICO",
             cost: 0.4,
@@ -220,11 +224,29 @@ var products = [
                     qty: 3
                 }
             ]
-        }
+        }*/
     ];
 
 app.get('/products', function(request, response) {
     response.json(products);
+});
+
+app.post('/purchases', parseUrlencoded, function(request, response) {
+    
+    var purchase = request.body;
+    
+    purchase.products.map(function (p) {
+        p.purchases = [{
+                    supplier: purchase.supplierName,
+                    invoiceNumber: purchase.invoiceNumber,
+                    invoiceDate: purchase.invoiceDate,
+                    qty: p.qty
+                }];
+        
+        products.push(p);
+    });
+    
+    response.status(201).json("La compra con la factura número " + purchase.invoiceNumber + " a " + purchase.supplierName + " ha sido guardada exitósamente!");
 });
 
 app.listen(3000, function () {

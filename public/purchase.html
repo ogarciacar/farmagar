@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html ng-app="purchase" lang="es">
+    <head>
+        <title>Inventario Farmagar</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    </head>
+
+    <body>
+        
+        <div class="container ">
+            
+            <div class="row">
+                <div class="col-md-12">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img alt="Farmagar" src="img/logo.gif" width="100px">
+                    </div>
+                    <form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Buscar productos">
+  </div>
+  <button type="submit" class="btn btn-default">Ir</button>
+</form>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="index.html"><small>Ver productos</small></a></li>
+                            <li class="active"><a href="#"><small>Registrar compra</small><span class="sr-only">(current)</span></a></li>   
+                            <li><a href="#"><small>Ver ventas</small></a></li>
+                        </ul>
+                    </div>
+                </nav>
+                </div>
+            </div>
+        
+        <form name="purchaseForm" ng-controller="PurchaseController as purchaseCtrl" ng-submit="purchaseCtrl.savePurchase()" novalidate>
+
+            
+        <div class="row" ng-show="purchaseCtrl.feedback">
+            <div class="col-md-12"><p class="bg-success">{{purchaseCtrl.feedback}}</p></div>
+        </div>
+            
+        <div class="row">
+            <div class="col-md-12"><h3>Datos de la compra</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                        <label for="supplierName">Nombre del Proveedor</label>
+                        <input type="text" ng-focus="purchaseCtrl.feedback = ''" class="form-control" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="invoiceNumber">Número de Factura</label>
+                        <input type="text" class="form-control" ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
+                    </div>
+            </div>
+            <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="invoiceDate">Fecha de la Factura</label>
+                        <input type="date" class="form-control"  ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="dd/mm/aaaa" required />
+                    </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group" ng-show="purchaseCtrl.purchase.products.length > 0">
+                    <label for="invoiceDate" class="text-muted">_________________</label>
+                    <button type="submit" class="btn btn-primary">Guardar compra</button></div></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">  
+                    <h3>Lista de productos comprados</h3>
+            </div>
+            <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="productName">Nombre Producto</label>
+                        <input type="text" class="form-control" ng-model="purchaseCtrl.product.name" placeholder="Producto" />
+                    </div>
+            </div>
+            
+            <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="productCost">Costo</label>
+                        <input type="number" class="form-control" ng-model="purchaseCtrl.product.cost" placeholder="$" min="0.1" />
+                    </div>
+            </div>
+            <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="productQty">Cantidad</label>
+                        <input type="number" class="form-control" placeholder="#" ng-model="purchaseCtrl.product.qty"  min="1"/>
+                    </div>
+            </div>
+            
+            <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="productPrice">Precio Venta</label>
+                        <input type="number" class="form-control" ng-model="purchaseCtrl.product.price" placeholder="$" min="0.1" />
+                    </div>
+            </div>
+            <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="productExpirationDate">Fecha de Vencimiento</label>
+                        <input type="date" class="form-control"  ng-model="purchaseCtrl.product.expirationDate" placeholder="dd/mm/aaaa" required />
+                    </div>
+            </div>
+            <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="productPrice" class="text-muted">_________________</label>
+                            <button type="button" class="btn btn-default ng-class: {disabled: !purchaseCtrl.product.expirationDate}" ng-click="purchaseCtrl.product.expirationDate && purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
+                        </div>
+                </div>
+            
+            
+                
+            </div>
+            
+            <div class="row text-danger">
+                <div class="col-md-4">
+                     <div class="form-group">
+                    {{purchaseCtrl.product.name}}
+                    </div>
+                </div>
+                <div class="col-md-1">
+                     <div class="form-group">
+                    {{purchaseCtrl.product.cost | currency}}
+                    </div>
+                </div>
+                <div class="col-md-1">
+                     <div class="form-group">
+                    {{purchaseCtrl.product.qty}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                     <div class="form-group">
+                    {{purchaseCtrl.product.price | currency}}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                     <div class="form-group">
+                    {{purchaseCtrl.product.expirationDate | date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <div class="row" ng-repeat="product in purchaseCtrl.purchase.products">
+                <div class="col-md-4">
+                    {{product.name}}
+                </div>
+                <div class="col-md-1">
+                    {{product.cost | currency}}
+                </div>
+                <div class="col-md-1">
+                    {{product.qty}}
+                </div>
+                <div class="col-md-2">
+                    {{product.price | currency}}
+                </div>
+                <div class="col-md-2">
+                    {{product.expirationDate | date:'dd/MM/yyyy'}}
+                </div>
+            </div>
+            
+        </form>
+            
+        </div>
+        
+        <script src="js/angular.min.js"></script>
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/purchase.js"></script>
+        
+    </body>
+</html>
