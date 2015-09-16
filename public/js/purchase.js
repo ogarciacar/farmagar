@@ -10,13 +10,13 @@
         this.product = {};
         this.feedback = undefined;
         this.purchase = {
-            register: 'orlando.garcia@gmail.com',
-            registrationDate: Date.now(),
+            
             products: []
         };
         
         this.addProduct = function ( product ) {
             product.expirationDate = this.product.expirationDate.valueOf();
+            product.name = product.name.toUpperCase();
             this.purchase.products.unshift(product);
             this.product = {};
         };
@@ -24,13 +24,17 @@
         this.savePurchase = function ( ) {
             
             this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
+            this.purchase.supplierName = this.purchase.supplierName.toUpperCase();
+            this.purchase.invoiceNumber = this.purchase.invoiceNumber.toUpperCase();
+            this.purchase.register = 'orlando.garcia@gmail.com';
+            this.purchase.registrationDate= Date.now();
             
             $http({
                 method: 'POST',
                 url: '/purchases',
                 data: this.purchase
             }).then(function(response) {
-                message.feedback = response.data;
+                message.feedback = "La compra a " + response.data['supplierName'] + " con factura # " + response.data['invoiceNumber']  + " ha sido guardada exitósamente!";
                 
             }, function(response) {
                 // called asynchronously if an error occurs

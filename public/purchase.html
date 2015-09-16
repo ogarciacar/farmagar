@@ -36,7 +36,7 @@
 
             
         <div class="row" ng-show="purchaseCtrl.feedback">
-            <div class="col-md-12"><p class="bg-success">{{purchaseCtrl.feedback}}</p></div>
+            <div class="col-md-12"><blockquote class="text-success"><p>{{purchaseCtrl.feedback}}</p></blockquote></div>
         </div>
             
         <div class="row">
@@ -46,13 +46,13 @@
             <div class="col-md-4">
                 <div class="form-group">
                         <label for="supplierName">Nombre del Proveedor</label>
-                        <input type="text" ng-focus="purchaseCtrl.feedback = ''" class="form-control" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
+                        <input type="text" ng-focus="purchaseCtrl.feedback = ''" class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
                 </div>
             </div>
             <div class="col-md-4">
                     <div class="form-group">
                         <label for="invoiceNumber">Número de Factura</label>
-                        <input type="text" class="form-control" ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
+                        <input type="text" class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
                     </div>
             </div>
             <div class="col-md-2">
@@ -74,7 +74,7 @@
             <div class="col-md-4">
                     <div class="form-group">
                         <label for="productName">Nombre Producto</label>
-                        <input type="text" class="form-control" ng-model="purchaseCtrl.product.name" placeholder="Producto" />
+                        <input type="text" class="form-control text-uppercase" ng-model="purchaseCtrl.product.name" placeholder="Producto" />
                     </div>
             </div>
             
@@ -116,7 +116,7 @@
             
             <div class="row text-danger">
                 <div class="col-md-4">
-                     <div class="form-group">
+                     <div class="form-group text-uppercase">
                     {{purchaseCtrl.product.name}}
                     </div>
                 </div>

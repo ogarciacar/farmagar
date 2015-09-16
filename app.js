@@ -264,19 +264,42 @@ app.post('/purchases', parseUrlencoded, function(request, response) {
     var purchase = request.body;
     
     purchase.products.map(function (p) {
-        p.purchases = [{
+        
+        var purchaseDetails = {
                     supplier: purchase.supplierName,
                     invoiceNumber: purchase.invoiceNumber,
                     invoiceDate: purchase.invoiceDate,
                     qty: p.qty,
                     register: purchase.register,
                     registrationDate:purchase.registrationDate
-                }];
+                };
         
-        products.push(p);
+        var isNew = true;
+        
+        for (var i = 0; i < products.length; i++) {
+                
+            var product = products[i];
+            
+            if (p.name == product.name) {  // update existing product
+                
+                product.purchases.unshift(purchaseDetails);
+                product.qty += p.qty;
+                isNew = false;
+                break;
+            }
+        }
+        
+        if (isNew) {    // adds a new product
+            p.purchases = [purchaseDetails];
+            products.push(p);
+        }
     });
     
-    response.status(201).json("La compra con la factura número " + purchase.invoiceNumber + " a " + purchase.supplierName + " ha sido guardada exitósamente!");
+    var messageData = { 
+        invoiceNumber: purchase.invoiceNumber, 
+        supplierName: purchase.supplierName
+    };
+    response.status(201).json(messageData);
 });
 
 app.listen(3000, function () {
