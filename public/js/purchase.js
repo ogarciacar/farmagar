@@ -10,8 +10,8 @@
         this.product = {};
         this.feedback = undefined;
         this.purchase = {
-            purchaseRegister: 'orlando.garcia@gmail.com',
-            purchaseRegistrationDate: Date.now(),
+            register: 'orlando.garcia@gmail.com',
+            registrationDate: Date.now(),
             products: []
         };
         

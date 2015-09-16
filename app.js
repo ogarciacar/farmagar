@@ -21,24 +21,24 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 42,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
                     qty: 8,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "300190",
                     invoiceDate: 1423890000000,
                     qty: 50,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         }, 
@@ -54,8 +54,8 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 2,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -71,8 +71,8 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 1,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -88,16 +88,16 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 10,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
                     qty: 14,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -113,8 +113,8 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 1,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -130,8 +130,8 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 3,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -147,16 +147,16 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 10,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
                     qty: 5,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         },
@@ -172,24 +172,24 @@ var products = [
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
                     qty: 10,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
                     qty: 14,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "300190",
                     invoiceDate: 1423890000000,
                     qty: 26,
-                    purchaseRegister: 'orlando.garcia@gmail.com',
-                    purchaseRegistrationDate: 1442416429531
+                    register: 'orlando.garcia@gmail.com',
+                    registrationDate: 1442416429531
                 }
             ]
         }/*,
@@ -269,8 +269,8 @@ app.post('/purchases', parseUrlencoded, function(request, response) {
                     invoiceNumber: purchase.invoiceNumber,
                     invoiceDate: purchase.invoiceDate,
                     qty: p.qty,
-                    purchaseRegister: purchase.purchaseRegister,
-                    purchaseRegistrationDate:purchase.purchaseRegistrationDate
+                    register: purchase.register,
+                    registrationDate:purchase.registrationDate
                 }];
         
         products.push(p);
