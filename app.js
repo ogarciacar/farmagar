@@ -20,19 +20,25 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 42
+                    qty: 42,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
-                    qty: 8
+                    qty: 8,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "300190",
                     invoiceDate: 1423890000000,
-                    qty: 50
+                    qty: 50,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         }, 
@@ -47,7 +53,9 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 2
+                    qty: 2,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -62,7 +70,9 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 1
+                    qty: 1,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -77,13 +87,17 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 10
+                    qty: 10,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
-                    qty: 14
+                    qty: 14,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -98,7 +112,9 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 1
+                    qty: 1,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -113,7 +129,9 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 3
+                    qty: 3,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -128,13 +146,17 @@ var products = [
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 10
+                    qty: 10,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
-                    qty: 5
+                    qty: 5,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         },
@@ -149,19 +171,25 @@ var products = [
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "355690",
                     invoiceDate: 1438923600000,
-                    qty: 10
+                    qty: 10,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "SERVICIO NACIONAL DE VENTAS, S.A (SENAVEN)",
                     invoiceNumber: "335490",
                     invoiceDate: 1432270800000,
-                    qty: 14
+                    qty: 14,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 },
                 {
                     supplier: "IMPORTADORA UNIVERSAL, S.A",
                     invoiceNumber: "300190",
                     invoiceDate: 1423890000000,
-                    qty: 26
+                    qty: 26,
+                    purchaseRegister: 'orlando.garcia@gmail.com',
+                    purchaseRegistrationDate: 1442416429531
                 }
             ]
         }/*,
@@ -240,7 +268,9 @@ app.post('/purchases', parseUrlencoded, function(request, response) {
                     supplier: purchase.supplierName,
                     invoiceNumber: purchase.invoiceNumber,
                     invoiceDate: purchase.invoiceDate,
-                    qty: p.qty
+                    qty: p.qty,
+                    purchaseRegister: purchase.purchaseRegister,
+                    purchaseRegistrationDate:purchase.purchaseRegistrationDate
                 }];
         
         products.push(p);
