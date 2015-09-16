@@ -21,6 +21,10 @@
             this.product = {};
         };
         
+        this.removeProduct = function ( productIndex ) {
+            this.purchase.products.splice(productIndex, 1);
+        };
+        
         this.savePurchase = function ( ) {
             
             this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();

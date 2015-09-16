@@ -144,22 +144,21 @@
                 
             </div>
             
-            <div class="row" ng-repeat="product in purchaseCtrl.purchase.products">
-                <div class="col-md-4">
-                    {{product.name}}
-                </div>
-                <div class="col-md-1">
-                    {{product.cost | currency}}
-                </div>
-                <div class="col-md-1">
-                    {{product.qty}}
-                </div>
-                <div class="col-md-2">
-                    {{product.price | currency}}
-                </div>
-                <div class="col-md-2">
-                    {{product.expirationDate | date:'dd/MM/yyyy'}}
-                </div>
+            <div class="row">
+                
+                <table class="table">
+                    <tbody >
+                        <tr ng-repeat="product in purchaseCtrl.purchase.products track by $index">
+                            <td class="col-md-4">{{product.name}}</td>
+                            <td class="col-md-1">{{product.cost | currency}}</td>
+                            <td class="col-md-1">{{product.qty}}</td>
+                            <td class="col-md-2">{{product.price | currency}}</td>
+                            <td class="col-md-2">{{product.expirationDate | date:'dd/MM/yyyy'}}</td>
+                            <td class="col-md-2"><a href="#" ng-click="purchaseCtrl.removeProduct($index)">Quitar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
             </div>
             
         </form>
