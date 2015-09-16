@@ -7,6 +7,7 @@ app.use(bodyParser.json()); // for parsing application/json
 
 app.use(express.static('public'));
 
+var sells = [];
 
 var products = [ 
         {
@@ -257,6 +258,27 @@ var products = [
 
 app.get('/products', function(request, response) {
     response.json(products);
+});
+
+app.get('/sells', function(request, response) {
+    response.json(sells);
+});
+
+app.post('/sell', parseUrlencoded, function(request, response) {
+    
+    var sell = request.body;
+    
+    for (var i = 0; i < products.length; i++) { // applies inventory discounts to the product amount
+        var product = products[i];
+        if (sell.productSold == product.name) {
+            product.qty -= sell.qtySold;
+            break;
+        }
+    }
+    
+    sells.unshift(sell); // stores the new sell
+    
+    response.status(201).json("OK");
 });
 
 app.post('/purchases', parseUrlencoded, function(request, response) {

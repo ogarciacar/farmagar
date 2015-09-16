@@ -56,36 +56,79 @@
                     
                     <br/>
                     
-                <button type="button" class="btn btn-default btn-xs" ng-show="!row.isExpired(product.expirationDate) && !row.isSoldOut(product.qty)">Registrar venta</button><button type="button" class="btn btn-default btn-xs" ng-show="row.isExpired(product.expirationDate) || row.isSoldOut(product.qty)" disabled="disabled">Registrar venta</button>
-                    
+                <button type="button" class="btn btn-default btn-xs ng-class: {disabled:row.isExpired(product.expirationDate) || row.isSoldOut(product.qty)}" data-toggle="modal" data-target="#sell{{(row.isExpired(product.expirationDate) || row.isSoldOut(product.qty))?'':$index}}">Registrar venta</button>
+                    <!-- Modal para ventas -->
+                    <div class="modal fade" id="sell{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form ng-controller="SellController as sellCtrl" ng-submit="sellCtrl.saveSell(product)" novalidate>
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Nueva venta: {{product.name}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group" ng-show="sellCtrl.feedback"><blockquote class="text-success"><p>{{sellCtrl.feedback}}</p></blockquote></div>
+                                    <div class="form-group">Precio de venta {{product.price|currency}}</div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="qty">Cantidad a vender (en unidosis)</label>
+                                            <div class="input-group">
+                                                <!--div class="input-group-addon">min 1</div-->
+                                                <input type="number" class="form-control" ng-focus="sellCtrl.feedback = ''" ng-model="sellCtrl.qty" min="1" max="{{product.qty}}" placeholder="Cantidad a vender">
+                                                <div class="input-group-addon">Max. disponibles {{product.qty}}</div>
+                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="discount">Descuento (en porcentaje)</label>
+                                            <div class="input-group">
+                                                <!--div class="input-group-addon">%</div-->
+                                                <input type="number" class="form-control ng-class: {disabled: !sellCtrl.isSafeSell(product.qty)}" ng-model="sellCtrl.discount" min="0" max="100" placeholder="Porcentaje de descuento">
+                                                <div class="input-group-addon">% Descuento (.00)</div>
+                                            </div>
+                                    </div>
+                                    <div class="form-group text-right">Total de la venta <b class="text-success">{{sellCtrl.total(product.price)|currency}}</b></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" ng-show="sellCtrl.isSafeSell(product.qty)">Guardar venta</button><button type="button" class="btn btn-default" ng-click="sellCtrl.feedback = ''" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
                     
                     <button type="button" class="btn btn-link btn-xs" data-toggle="modal" data-target="#myModal{{$index}}">Ver compras</button>
-                    <!-- Modal -->
-            <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Histórico de compras de {{product.name}}</h4>
-      </div>
-      <div class="modal-body">
-          <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate'">
-              <h5><b>Proveedor: </b>{{purchase.supplier}}</h5>
-              <h6><b>Factura </b># {{purchase.invoiceNumber}} del {{purchase.invoiceDate | date:'dd/MM/yyyy'}} | <b>Cantidad comprada: </b>{{purchase.qty}}</h6>
-              <h6>Compra registrada el {{purchase.registrationDate|date: 'dd/MM/yyyy'}} por <cite>{{purchase.register}}</cite></h6>
-          </blockquote>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+                    
+                    <!-- Modal para historico de compras -->
+                    <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Histórico de compras de {{product.name}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate'">
+                                        <h5><b>Proveedor: </b>{{purchase.supplier}}</h5>
+                                        <h6><b>Factura </b># {{purchase.invoiceNumber}} del {{purchase.invoiceDate | date:'dd/MM/yyyy'}} | 
+                                        <b>Cantidad comprada: </b>{{purchase.qty}}</h6>
+                                        <h6>Compra registrada el {{purchase.registrationDate|date: 'dd/MM/yyyy'}} por 
+                                        <cite>{{purchase.register}}</cite></h6>
+                                    </blockquote>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <span class="label label-danger" ng-show="row.isExpired(product.expirationDate)">Expirado</span>
                     <span class="label label-default" ng-show="row.isSoldOut(product.qty)">Agotado</span>
                     
-                    <span class="label label-warning" ng-show="row.isNearToExpire(product.expirationDate)">Expira en {{ row.daysToExpire(product.expirationDate) | number:0 }} días</span></td>
+                    <span class="label label-warning" ng-show="row.isNearToExpire(product.expirationDate) && !row.isSoldOut(product.qty)">Expira en {{ row.daysToExpire(product.expirationDate) | number:0 }} días</span></td>
                 <td>{{product.expirationDate | date:'dd/MM/yyyy'}}<span class="label label-info" ng-show="product.expirationDate === ''">No expira</span></td>
                 <td>{{product.cost | currency}}</td>
                 <td>{{product.qty}}</td>
