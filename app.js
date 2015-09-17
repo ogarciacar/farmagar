@@ -123,7 +123,7 @@ var products = [
             name: "KOPTIN X 3 TABLETAS",
             cost: 14.95,
             qty: 3,
-            price: 8.57,
+            price: 25.71,
             expirationDate: 1450155600000,
             purchases : [
                 {
@@ -140,7 +140,7 @@ var products = [
             name: "TROFERIT X 15 TABLETAS",
             cost: 10.7,
             qty: 15,
-            price: 1.23,
+            price: 18.4,
             expirationDate: 1449464400000,
             purchases : [
                 {
@@ -165,7 +165,7 @@ var products = [
             name: "BICARBONATO DE SODIO X 50",
             cost: 7.5,
             qty: 50,
-            price: 0.21,
+            price: 12.9,
             expirationDate: "",
             purchases : [
                 {
@@ -193,7 +193,7 @@ var products = [
                     registrationDate: 1442416429531
                 }
             ]
-        }/*,
+        },
         {
             name: "COLECTOR DE ORINA PEDIATRICO",
             cost: 0.4,
@@ -253,7 +253,7 @@ var products = [
                     qty: 3
                 }
             ]
-        }*/
+        }
     ];
 
 app.get('/products', function(request, response) {
