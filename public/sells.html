@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="sells">
+<html ng-app="sales">
     <head>
         <title>Inventario Farmagar</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
@@ -7,7 +7,7 @@
 
     <body>
         
-        <div class="container ">
+        <div class="container" ng-controller="SalesReportController as salesCtrl">
             
             <div class="row">
                 <div class="col-md-12">
@@ -31,10 +31,24 @@
                 </nav>
                 </div>
             </div>
+            
+        <div class="row">
+            <div class="col-md-2 col-md-offset-8">
+                <label for="since">Desde</label>
+                <input type="date" class="form-control col-md-4" id="since" ng-change="salesCtrl.report()" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
+            </div>
+            <div class="col-md-2">
+                <label for="until">Hasta</label>
+                <input type="date" class="form-control col-md-4" ng-change="salesCtrl.report()" id="until" ng-model="salesCtrl.until" placeholder="dd/mm/aaaa"/>
+            </div> 
+        </div>
+        <div class="row">
+            &nbsp;
+        </div>
         
         <div class="row">
         <div class="col-md-12">
-        <table class="table" ng-controller="SellsController as sells">
+        <table class="table">
             
             <thead>
                 <tr>
@@ -43,19 +57,19 @@
                     <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Descuento</th>
-                    <th>Total <b class="text-success">({{sells.totalSold|currency}})</b></th>
+                    <th>Total <b class="text-success">({{salesCtrl.totalSales|currency}})</b></th>
                     
                 </tr>
             </thead>
             
-            <tbody ng-repeat="sell in sells.sells | orderBy : '+sellDate' track by sells.addToTotal(sell)">
+            <tbody ng-repeat="sale in salesCtrl.sales | orderBy : '+sellDate' track by salesCtrl.addToTotal(sale)">
             <tr>
-                <td>{{sell.seller}}</td>
-                <td>{{sell.sellDate | date:'dd/MM/yyyy'}}</td>
-                <td>{{sell.productSold}}</td>
-                <td>{{sell.qtySold}}</td>
-                <td>{{sell.discount}}</td>
-                <td>{{sell.total | currency}}</td>
+                <td>{{sale.seller}}</td>
+                <td>{{sale.sellDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{sale.productSold}}</td>
+                <td>{{sale.qtySold}}</td>
+                <td>{{sale.discount}}</td>
+                <td>{{sale.total | currency}}</td>
             </tr>
             </tbody>
             

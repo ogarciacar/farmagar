@@ -1,23 +1,40 @@
 ( function () {
     
-    var app = angular.module('sells', [ ]);
+    var app = angular.module('sales', [ ]);
     
-    app.controller('SellsController', [ '$http', function($http) {
+    app.controller('SalesReportController', [ '$http', function($http) {
         
         var store = this;
         
-        store.sells = [ ];
+        store.sales = [ ];
         
-        store.totalSold = 0;
+        store.totalSales = 0;
         
-        $http.get('/sells').success( function ( data ) {
-            store.sells = data;
-        });
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth();
+        var yyyy = today.getFullYear();
+    
+        
+        store.since = new Date(yyyy, mm, dd);
+    
+        store.until = new Date();//Date.now();
+        
+        
         
         this.addToTotal = function (sell) {
-            store.totalSold += sell.total;
+            store.totalSales += sell.total;
             return sell.sellDate;
         };
+        
+        this.report = function () {
+            store.totalSales = 0;
+            $http.get('/sales/'+store.since.valueOf()+'/'+store.until.valueOf()).success( function ( data ) {
+                store.sales = data;
+            });    
+        };
+        
+        this.report();
     }]);
     
 })();

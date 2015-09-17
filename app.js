@@ -7,7 +7,7 @@ app.use(bodyParser.json()); // for parsing application/json
 
 app.use(express.static('public'));
 
-var sells = [];
+var sells = {};
 
 var products = [ 
         {
@@ -260,8 +260,23 @@ app.get('/products', function(request, response) {
     response.json(products);
 });
 
-app.get('/sells', function(request, response) {
-    response.json(sells);
+app.get('/sales/:since/:until', function(request, response) {
+    
+    var since = request.params.since;
+    
+    var until = request.params.until;
+    
+    console.log(since + " - " + until);
+    
+    var salesReport = [];
+    
+    for (var key in sells) {
+        if (key >= since && key <= until) {
+            salesReport.unshift(sells[key]);
+        }
+    }
+
+    response.json(salesReport);
 });
 
 app.post('/sell', parseUrlencoded, function(request, response) {
@@ -276,7 +291,8 @@ app.post('/sell', parseUrlencoded, function(request, response) {
         }
     }
     
-    sells.unshift(sell); // stores the new sell
+    //sells.unshift(sell); // stores the new sell
+    sells[sell.sellDate] = sell;
     
     response.status(201).json("OK");
 });
