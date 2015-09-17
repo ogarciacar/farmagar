@@ -58,7 +58,7 @@
             <div class="col-md-2">
                     <div class="form-group">
                         <label for="invoiceDate">Fecha de la Factura</label>
-                        <input type="date" class="form-control"  ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="dd/mm/aaaa" required />
+                        <input type="date" class="form-control"  ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="MM-dd-yyyy" max="{{purchaseCtrl.today}}" required />
                     </div>
             </div>
             <div class="col-md-2">
@@ -106,7 +106,7 @@
             <div class="col-md-2">
                         <div class="form-group">
                             <label for="productPrice" class="text-muted">_________________</label>
-                            <button type="button" class="btn btn-default ng-class: {disabled: !purchaseCtrl.product.expirationDate}" ng-click="purchaseCtrl.product.expirationDate && purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
+                            <button type="button" class="btn btn-default ng-class: {disabled: !purchaseCtrl.isValid(purchaseCtrl.product)}" ng-click="purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
                         </div>
                 </div>
             
@@ -153,7 +153,7 @@
                             <td class="col-md-1">{{product.cost | currency}}</td>
                             <td class="col-md-1">{{product.qty}}</td>
                             <td class="col-md-2">{{product.price | currency}}</td>
-                            <td class="col-md-2">{{product.expirationDate | date:'dd/MM/yyyy'}}</td>
+                            <td class="col-md-2">{{(product.expirationDate) ? (product.expirationDate | date:'dd/MM/yyyy') : 'No expira'}}</td>
                             <td class="col-md-2"><a href="#" ng-click="purchaseCtrl.removeProduct($index)">Quitar</a></td>
                         </tr>
                     </tbody>

@@ -6,7 +6,8 @@
         
         var message = this;
         message.feedback = '';
-        
+        this.today = new Date();//.toLocaleDateString().replace(/\//g, '-');
+        this.today = this.today.getFullYear() + '-' + ( (this.today.getMonth()+1 >= 10) ? (this.today.getMonth()+1) : ('0'+(this.today.getMonth()+1))) + '-' + this.today.getDate();
         this.product = {};
         this.feedback = undefined;
         this.purchase = {
@@ -15,7 +16,7 @@
         };
         
         this.addProduct = function ( product ) {
-            product.expirationDate = this.product.expirationDate.valueOf();
+            product.expirationDate = (this.product.expirationDate) ? this.product.expirationDate.valueOf() : '';
             product.name = product.name.toUpperCase();
             this.purchase.products.unshift(product);
             this.product = {};
@@ -23,6 +24,10 @@
         
         this.removeProduct = function ( productIndex ) {
             this.purchase.products.splice(productIndex, 1);
+        };
+
+        this.isValid = function ( p ) {
+            return p.name && p.qty > 0 && p.cost > 0 && p.price > 0;
         };
         
         this.savePurchase = function ( ) {
