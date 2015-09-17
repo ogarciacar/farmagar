@@ -25,7 +25,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#"><small>Ver productos</small><span class="sr-only">(current)</span></a></li>
                             <li><a href="purchase.html"><small>Registrar compra</small></a></li>   
-                            <li><a href="#"><small>Ver ventas</small></a></li>
+                            <li><a href="sells.html"><small>Ver ventas</small></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -40,15 +40,15 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Vencimiento</th>
-                    <th>Costo</th>
+                    <th>Costo <span class="text-danger">({{store.totalExpenses|currency}})</span></th>
                     <th>Cantidad</th>
                     <th>Precio</th>
-                    <th>Total</th>
+                    <th>Total <span class="text-success">({{store.totalToSell|currency}})</span></th>
                     
                 </tr>
             </thead>
             
-            <tbody ng-repeat="product in store.products | orderBy : '+name'">
+            <tbody ng-repeat="product in store.products | orderBy : '+name' track by store.addToTotal(product)">
             
                 
             <tr ng-controller="ProductRowController as row">

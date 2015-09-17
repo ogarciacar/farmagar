@@ -8,9 +8,19 @@
         
         store.products = [ ];
         
+        store.totalToSell = 0;
+        
+        store.totalExpenses = 0;
+        
         $http.get('/products').success( function ( data ) {
             store.products = data;
         });
+        
+        this.addToTotal = function (product) {
+            store.totalToSell += product.qty * product.price;
+            store.totalExpenses += product.qty * product.cost;
+            return product.name;
+        };
     }]);
     
     app.controller('SellController', [ '$http', function($http) {
