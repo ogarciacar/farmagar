@@ -32,6 +32,13 @@
                 </div>
             </div>
         
+            <div class="row">
+                <div class="col-md-12"><h1>Compras <small>Ingresa productos al inventario registrando la factura de tu proveedor</small></h1></div> 
+            </div>
+        <div class="row">
+            &nbsp;
+        </div>
+        
         <form name="purchaseForm" ng-controller="PurchaseController as purchaseCtrl" ng-submit="purchaseCtrl.savePurchase()" novalidate>
 
             
@@ -39,9 +46,6 @@
             <div class="col-md-12"><blockquote class="text-success"><p>{{purchaseCtrl.feedback}}</p></blockquote></div>
         </div>
             
-        <div class="row">
-            <div class="col-md-12"><h3>Datos de la compra</h3></div>
-        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">

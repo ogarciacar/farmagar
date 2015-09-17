@@ -33,14 +33,16 @@
             </div>
             
         <div class="row">
-            <div class="col-md-2 col-md-offset-8">
+            <div class="col-md-6"><h1>Ventas <small>Total vendido por rango de fechas</small></h1></div>
+            <div class="col-md-2">
                 <label for="since">Desde</label>
                 <input type="date" class="form-control col-md-4" id="since" ng-change="salesCtrl.salesReport()" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
             </div>
             <div class="col-md-2">
                 <label for="until">Hasta</label>
                 <input type="date" class="form-control col-md-4" ng-change="salesCtrl.salesReport()" id="until" ng-model="salesCtrl.until" placeholder="dd/mm/aaaa"/>
-            </div> 
+            </div>
+            <div class="col-md-1"><h1><small class="text-success">{{salesCtrl.totalSales|currency}}</small></h1></div>
         </div>
         <div class="row">
             &nbsp;
@@ -62,8 +64,8 @@
                 </tr>
             </thead>
             
-            <tbody ng-repeat="sale in salesCtrl.sales | orderBy : '+date' track by salesCtrl.addToTotal(sale)">
-            <tr>
+            <tbody ng-show="salesCtrl.sales.length > 0">
+            <tr ng-repeat="sale in salesCtrl.sales | orderBy : '+date' track by salesCtrl.addToTotal(sale)">
                 <td>{{sale.seller}}</td>
                 <td>{{sale.date | date:'dd/MM/yyyy'}}</td>
                 <td>{{sale.product}}</td>
@@ -74,6 +76,7 @@
             </tbody>
             
         </table>
+            <blockquote class="text-danger" ng-show="!salesCtrl.sales.length > 0"><p>No hay registros de ventas para el rango de fecha desde {{salesCtrl.since|date: 'dd/MM/yyyy'}} - {{salesCtrl.until|date: 'dd/MM/yyyy'}}</p></blockquote>
             </div>
             </div>
             </div>
