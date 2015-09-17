@@ -25,7 +25,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#"><small>Ver productos</small><span class="sr-only">(current)</span></a></li>
                             <li><a href="purchase.html"><small>Registrar compra</small></a></li>   
-                            <li><a href="sells.html"><small>Ver ventas</small></a></li>
+                            <li><a href="sales.html"><small>Ver ventas</small></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -56,12 +56,12 @@
                     
                     <br/>
                     
-                <button type="button" class="btn btn-default btn-xs ng-class: {disabled:row.isExpired(product.expirationDate) || row.isSoldOut(product.qty)}" data-toggle="modal" data-target="#sell{{(row.isExpired(product.expirationDate) || row.isSoldOut(product.qty))?'':$index}}">Registrar venta</button>
+                <button type="button" class="btn btn-default btn-xs ng-class: {disabled:row.isExpired(product.expirationDate) || row.isSoldOut(product.qty)}" data-toggle="modal" data-target="#sale{{(row.isExpired(product.expirationDate) || row.isSoldOut(product.qty))?'':$index}}">Registrar venta</button>
                     <!-- Modal para ventas -->
-                    <div class="modal fade" id="sell{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal fade" id="sale{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form ng-controller="SellController as sellCtrl" ng-submit="sellCtrl.saveSell(product)" novalidate>
+                                <form ng-controller="SaleController as saleCtrl" ng-submit="saleCtrl.saveSale(product)" novalidate>
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -69,13 +69,13 @@
                                     <h4 class="modal-title" id="myModalLabel">Nueva venta: {{product.name}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group" ng-show="sellCtrl.feedback"><blockquote class="text-success"><p>{{sellCtrl.feedback}}</p></blockquote></div>
+                                    <div class="form-group" ng-show="saleCtrl.feedback"><blockquote class="text-success"><p>{{saleCtrl.feedback}}</p></blockquote></div>
                                     <div class="form-group">Precio de venta {{product.price|currency}}</div>
                                     <div class="form-group">
                                         <label class="sr-only" for="qty">Cantidad a vender (en unidosis)</label>
                                             <div class="input-group">
                                                 <!--div class="input-group-addon">min 1</div-->
-                                                <input type="number" class="form-control" ng-focus="sellCtrl.feedback = ''" ng-model="sellCtrl.qty" min="1" max="{{product.qty}}" placeholder="Cantidad a vender">
+                                                <input type="number" class="form-control" ng-focus="saleCtrl.feedback = ''" ng-model="saleCtrl.qty" min="1" max="{{product.qty}}" placeholder="Cantidad a vender">
                                                 <div class="input-group-addon">Max. disponibles {{product.qty}}</div>
                                             </div>
                                     </div>
@@ -83,14 +83,14 @@
                                         <label class="sr-only" for="discount">Descuento (en porcentaje)</label>
                                             <div class="input-group">
                                                 <!--div class="input-group-addon">%</div-->
-                                                <input type="number" class="form-control ng-class: {disabled: !sellCtrl.isSafeSell(product.qty)}" ng-model="sellCtrl.discount" min="0" max="100" placeholder="Porcentaje de descuento">
+                                                <input type="number" class="form-control ng-class: {disabled: !saleCtrl.isSafeSell(product.qty)}" ng-model="saleCtrl.discount" min="0" max="100" placeholder="Porcentaje de descuento">
                                                 <div class="input-group-addon">% Descuento (.00)</div>
                                             </div>
                                     </div>
-                                    <div class="form-group text-right">Total de la venta <b class="text-success">{{sellCtrl.total(product.price)|currency}}</b></div>
+                                    <div class="form-group text-right">Total de la venta <b class="text-success">{{saleCtrl.total(product.price)|currency}}</b></div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" ng-show="sellCtrl.isSafeSell(product.qty)">Guardar venta</button><button type="button" class="btn btn-default" ng-click="sellCtrl.feedback = ''" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary" ng-show="saleCtrl.isSafeSell(product.qty)">Guardar venta</button><button type="button" class="btn btn-default" ng-click="saleCtrl.feedback = ''" data-dismiss="modal">Cerrar</button>
                                 </div>
                                     </form>
                             </div>

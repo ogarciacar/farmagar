@@ -266,7 +266,7 @@ app.get('/sales/:since/:until', function(request, response) {
     
     var until = request.params.until;
     
-    console.log(since + " - " + until);
+    //console.log(since + " - " + until);
     
     var salesReport = [];
     
@@ -279,20 +279,20 @@ app.get('/sales/:since/:until', function(request, response) {
     response.json(salesReport);
 });
 
-app.post('/sell', parseUrlencoded, function(request, response) {
+app.post('/sale', parseUrlencoded, function(request, response) {
     
-    var sell = request.body;
+    var sale = request.body;
     
     for (var i = 0; i < products.length; i++) { // applies inventory discounts to the product amount
         var product = products[i];
-        if (sell.productSold == product.name) {
-            product.qty -= sell.qtySold;
+        if (sale.product == product.name) {
+            product.qty -= sale.qty;
             break;
         }
     }
     
     //sells.unshift(sell); // stores the new sell
-    sells[sell.sellDate] = sell;
+    sells[sale.date] = sale;
     
     response.status(201).json("OK");
 });

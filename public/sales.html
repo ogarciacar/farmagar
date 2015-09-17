@@ -35,11 +35,11 @@
         <div class="row">
             <div class="col-md-2 col-md-offset-8">
                 <label for="since">Desde</label>
-                <input type="date" class="form-control col-md-4" id="since" ng-change="salesCtrl.report()" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
+                <input type="date" class="form-control col-md-4" id="since" ng-change="salesCtrl.salesReport()" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
             </div>
             <div class="col-md-2">
                 <label for="until">Hasta</label>
-                <input type="date" class="form-control col-md-4" ng-change="salesCtrl.report()" id="until" ng-model="salesCtrl.until" placeholder="dd/mm/aaaa"/>
+                <input type="date" class="form-control col-md-4" ng-change="salesCtrl.salesReport()" id="until" ng-model="salesCtrl.until" placeholder="dd/mm/aaaa"/>
             </div> 
         </div>
         <div class="row">
@@ -62,18 +62,16 @@
                 </tr>
             </thead>
             
-            <tbody ng-repeat="sale in salesCtrl.sales | orderBy : '+sellDate' track by salesCtrl.addToTotal(sale)">
+            <tbody ng-repeat="sale in salesCtrl.sales | orderBy : '+date' track by salesCtrl.addToTotal(sale)">
             <tr>
                 <td>{{sale.seller}}</td>
-                <td>{{sale.sellDate | date:'dd/MM/yyyy'}}</td>
-                <td>{{sale.productSold}}</td>
-                <td>{{sale.qtySold}}</td>
+                <td>{{sale.date | date:'dd/MM/yyyy'}}</td>
+                <td>{{sale.product}}</td>
+                <td>{{sale.qty}}</td>
                 <td>{{sale.discount}}</td>
-                <td>{{sale.total | currency}}</td>
+                <td>{{sale.amount | currency}}</td>
             </tr>
             </tbody>
-            
-            
             
         </table>
             </div>
@@ -83,6 +81,6 @@
         <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         
-        <script type="text/javascript" src="js/sells.js"></script>
+        <script type="text/javascript" src="js/sales.js"></script>
     </body>
 </html>

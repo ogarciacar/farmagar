@@ -23,45 +23,45 @@
         };
     }]);
     
-    app.controller('SellController', [ '$http', function($http) {
+    app.controller('SaleController', [ '$http', function($http) {
         
-        var sell = this;
+        var sale = this;
         
         this.total = function (price) {
             
-            if (sell.qty > 0 && !sell.discount) { // there is qty and there is not discount
-                return price*sell.qty;
-            } else if (sell.qty > 0 && sell.discount > 0) {
-                var t = price*sell.qty;
-                return t - ((t*sell.discount)/100.0);
+            if (sale.qty > 0 && !sale.discount) { // there is qty and there is not discount
+                return price*sale.qty;
+            } else if (sale.qty > 0 && sale.discount > 0) {
+                var t = price*sale.qty;
+                return t - ((t*sale.discount)/100.0);
             } else {
                 return 0.0;
             }
         };
         
         this.isSafeSell = function (qty) {
-            return sell.qty > 0 && sell.qty <= qty ;
+            return sale.qty > 0 && sale.qty <= qty ;
         };
         
-        this.saveSell = function (product) {
+        this.saveSale = function (product) {
             var tx = {
-                productSold: product.name,
-                qtySold: sell.qty,
+                product: product.name,
+                qty: sale.qty,
                 seller: 'orlando.garcia@gmail.com',
-                sellDate: Date.now(),
-                total: sell.total(product.price),
-                discount: sell.discount
+                date: Date.now(),
+                amount: sale.total(product.price),
+                discount: sale.discount
             };
             
             $http({
                 method: 'POST',
-                url: '/sell',
+                url: '/sale',
                 data: tx
             }).then(function(response) {
-                sell.feedback = "Venta registrada exitosamente!";
-                product.qty -= sell.qty;
-                sell.qty = undefined;
-                sell.discount = undefined;
+                sale.feedback = "Venta registrada exitosamente!";
+                product.qty -= sale.qty;
+                sale.qty = undefined;
+                sale.discount = undefined;
             }, function(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
