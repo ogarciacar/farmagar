@@ -1,0 +1,18 @@
+<table class="table" ng-init="stock.showProducts()">
+<thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Vencimiento</th>
+        <th>Costo <span class="text-danger">({{stock.totalExpenses|currency}})</span></th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Total <span class="text-success">({{stock.totalToSell|currency}})</span></th>
+    </tr>
+</thead>
+
+<tbody>
+    
+<tr ng-repeat="product in stock.products | orderBy : '+name' track by stock.addToTotal(product)" product-item></tr>
+            
+</tbody>
+</table>

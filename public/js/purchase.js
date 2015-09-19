@@ -2,7 +2,11 @@
     
     var app = angular.module('purchase', [ ]);
     
-    app.controller('PurchaseController', [ '$http', function($http) {
+    app.directive('purchaseForm', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'purchase-form.html',
+            controller: [ '$http', function($http) {
         
         var message = this;
         message.feedback = '';
@@ -14,6 +18,14 @@
             
             products: []
         };
+        
+        this.initForm = function () {
+            message.feedback = '';
+            this.product = {};
+            this.purchase = {
+                products: []
+            };
+        };        
         
         this.addProduct = function ( product ) {
             product.expirationDate = (this.product.expirationDate) ? this.product.expirationDate.valueOf() : '';
@@ -50,13 +62,15 @@
                 // or server returns response with an error status.
             });
             
-            this.purchase = {
-                products: []
-            };
             
+            this.initForm();
             
         }; 
         
-    } ] );
+    } ] ,            
+            controllerAs: 'purchaseCtrl'
+        };
+    });
+    
     
 })();

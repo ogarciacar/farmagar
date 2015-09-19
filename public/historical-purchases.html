@@ -1,0 +1,27 @@
+
+                    
+                    <!-- Modal para historico de compras -->
+                    <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Histórico de compras de {{product.name}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate'">
+                                        <h5><b>Proveedor: </b>{{purchase.supplier}}</h5>
+                                        <h6><b>Factura </b># {{purchase.invoiceNumber}} del {{purchase.invoiceDate | date:'dd/MM/yyyy'}} | 
+                                        <b>Cantidad comprada: </b>{{purchase.qty}}</h6>
+                                        <h6>Compra registrada el {{purchase.registrationDate|date: 'dd/MM/yyyy'}} por 
+                                        <cite>{{purchase.register}}</cite></h6>
+                                    </blockquote>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
