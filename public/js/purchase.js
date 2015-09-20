@@ -10,10 +10,7 @@
         
         var message = this;
         message.feedback = '';
-        this.today = new Date();//.toLocaleDateString().replace(/\//g, '-');
-        this.today = this.today.getFullYear() + '-' + ( (this.today.getMonth()+1 >= 10) ? (this.today.getMonth()+1) : ('0'+(this.today.getMonth()+1))) + '-' + this.today.getDate();
-        this.product = {};
-        this.feedback = undefined;
+        
         this.purchase = {
             
             products: []
