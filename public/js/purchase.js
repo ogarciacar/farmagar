@@ -39,6 +39,10 @@
             return p.name && p.qty > 0 && p.cost > 0 && p.price > 0;
         };
         
+        this.isValidInvoice = function () {
+            return this.purchase.supplierName && this.purchase.invoiceDate && this.purchase.invoiceNumber;
+        };
+        
         this.savePurchase = function ( ) {
             
             this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();

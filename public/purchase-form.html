@@ -1,6 +1,6 @@
 <form name="purchaseForm" ng-submit="purchaseCtrl.savePurchase()" novalidate>
 <div class="row">
-                <div class="col-md-12"><h1>Compras <small>Ingresa productos al inventario registrando la factura de tu proveedor</small></h1></div> 
+                <div class="col-md-12"><h1>Compras <small>Ingresa productos registrando la factura de tu proveedor</small></h1></div> 
             </div>
             
         <div class="row" ng-show="purchaseCtrl.feedback">
@@ -29,10 +29,14 @@
             <div class="col-md-2">
                 <div class="form-group" ng-show="purchaseCtrl.purchase.products.length > 0">
                     <label for="invoiceDate" class="text-muted">_________________</label>
-                    <button type="submit" class="btn btn-primary">Guardar compra</button></div></div>
+                    <button type="submit" class="btn btn-primary">Guardar compra</button></div>
+                </div>
+          
+                </div>
+                
         </div>
         
-        <div class="row">
+        <div class="row" ng-show="purchaseCtrl.isValidInvoice()">
             <div class="col-md-12">  
                     <h3>Lista de productos comprados</h3>
             </div>
