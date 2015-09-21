@@ -16,6 +16,8 @@
             products: []
         };
         
+        this.product = {};
+                
         this.initForm = function () {
             message.feedback = '';
             this.product = {};

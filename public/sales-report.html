@@ -1,11 +1,13 @@
     <div class="row">
-        <div class="col-md-6"><h1>Ventas <small>Total vendido en rango de fecha {{salesCtrl.totalSales|currency}}</small></h1></div>
-        <div class="col-md-2 col-md-offset-2">
-            <label for="since">Desde</label>
-                <input type="date" class="form-control col-md-4" id="since" 
-                       ng-change="salesCtrl.salesReport(salesCtrl.since, salesCtrl.until)" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
+        <div class="col-sm-6"><h1>Ventas 
+            <small class="hidden-sm hidden-xs">Total vendido en rango de fecha {{salesCtrl.totalSales|currency}}</small></h1>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-md-offset-2 col-sm-3 col-xs-6">
+            <label for="since">Desde</label>
+            <input type="date" class="form-control col-md-4" id="since" 
+                ng-change="salesCtrl.salesReport(salesCtrl.since, salesCtrl.until)" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-6">
             <label for="until">Hasta</label>
             <input type="date" class="form-control col-md-4" id="until" 
                    ng-change="salesCtrl.salesReport(salesCtrl.since, salesCtrl.until)" ng-model="salesCtrl.until" max="{{page.today()}}" placeholder="dd/mm/aaaa"/>
@@ -13,22 +15,26 @@
     </div>
     
         
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row" ng-show="!salesCtrl.sales.length > 0">
+        <div class="col-sm-12">
             
-            <blockquote class="text-danger" ng-show="!salesCtrl.sales.length > 0">
+            <blockquote class="text-danger" >
                 <p>No hay registros de ventas para el rango de fecha desde 
                     {{salesCtrl.since|date: 'dd/MM/yyyy'}} - {{salesCtrl.until|date: 'dd/MM/yyyy'}}</p>
             </blockquote>
-            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
             <table class="table" ng-show="salesCtrl.sales.length > 0">
             <thead>
                 <tr>
-                    <th>Registrado por</th>
-                    <th>Fecha venta</th>
                     <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Descuento</th>
+                    <th>Fecha venta</th>
+                    <th class="hidden-xs">Vendido por</th>
+                    <th class="hidden-xs">Cantidad</th>
+                    <th class="hidden-xs">Descuento</th>
                     <th>Total <b class="text-success">({{salesCtrl.totalSales|currency}})</b></th>
                     
                 </tr>
@@ -36,11 +42,11 @@
             
             <tbody ng-show="salesCtrl.sales.length > 0">
             <tr ng-repeat="sale in salesCtrl.sales | orderBy : '+date' track by salesCtrl.addToTotal(sale)">
-                <td>{{sale.seller}}</td>
+                <td><strong class="text-primary">{{sale.product}}</strong></td>
                 <td>{{sale.date | date:'dd/MM/yyyy'}}</td>
-                <td>{{sale.product}}</td>
-                <td>{{sale.qty}}</td>
-                <td>{{sale.discount}}</td>
+                <td class="hidden-xs">{{sale.seller}}</td>
+                <td class="hidden-xs">{{sale.qty}}</td>
+                <td class="hidden-xs">{{sale.discount}}</td>
                 <td>{{sale.amount | currency}}</td>
             </tr>
             </tbody>            

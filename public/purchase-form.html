@@ -1,133 +1,130 @@
 <form name="purchaseForm" ng-submit="purchaseCtrl.savePurchase()" novalidate>
-<div class="row">
-                <div class="col-md-12"><h1>Compras <small>Ingresa productos registrando la factura de tu proveedor</small></h1></div> 
-            </div>
-            
-        <div class="row" ng-show="purchaseCtrl.feedback">
-            <div class="col-md-12"><blockquote class="text-success"><p>{{purchaseCtrl.feedback}}</p></blockquote></div>
-        </div>
-            
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                        <label for="supplierName">Nombre del Proveedor</label>
-                        <input type="text" ng-focus="purchaseCtrl.feedback = ''" class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
-                </div>
-            </div>
-            <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="invoiceNumber">Número de Factura</label>
-                        <input type="text" class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
-                    </div>
-            </div>
-            <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="invoiceDate">Fecha de la Factura</label>
-                        <input type="date" class="form-control"  ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="MM-dd-yyyy" max="{{page.today()}}" required />
-                    </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group" ng-show="purchaseCtrl.purchase.products.length > 0">
-                    <label for="invoiceDate" class="text-muted">_________________</label>
-                    <button type="submit" class="btn btn-primary">Guardar compra</button></div>
-                </div>
-          
-                </div>
-                
+
+    <div class="row">
+        <div class="col-sm-4 col-xs-12">
+            <h1>Compras</h1>
         </div>
         
-        <div class="row" ng-show="purchaseCtrl.isValidInvoice()">
-            <div class="col-md-12">  
-                    <h3>Lista de productos comprados</h3>
+        
+    </div>
+    
+    
+    
+    <div class="row" ng-show="purchaseCtrl.feedback">
+        <div class="col-md-12"><blockquote class="text-success"><p>{{purchaseCtrl.feedback}}</p></blockquote></div>
+    </div>
+    
+     <div class="row hidden-xs" ng-show="!purchaseCtrl.isValidInvoice() && !purchaseCtrl.feedback">
+            <div class="col-md-12"><blockquote class="text-info"><p>Para registrar una compra debe registrar los datos de la factura y luego agregar los productos comprados</p></blockquote></div>
+        </div>
+    
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">  
+            <h3>Datos de la factura</h3>
+        </div>
+        
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="supplierName">Nombre del Proveedor</label>
+                <input type="text" ng-focus="purchaseCtrl.feedback = ''" 
+                       class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
             </div>
-            <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="productName">Nombre Producto</label>
-                        <input type="text" class="form-control text-uppercase" ng-model="purchaseCtrl.product.name" placeholder="Producto" />
-                    </div>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="invoiceNumber">Número de Factura</label>
+                <input type="text" class="form-control text-uppercase" 
+                       ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
             </div>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="invoiceDate">Fecha de la Factura</label>
+                <input type="date" class="form-control"
+                       ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="MM-dd-yyyy" max="{{page.today()}}" required />
+            </div>
+        </div>
+        
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="saveButton" class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <button type="submit" id="saveButton" class="btn btn-primary btn-group-justified ng-class: {disabled : !purchaseCtrl.purchase.products.length > 0}">Guardar compra</button></div>
+            </div>
+    </div>
+        
+    <div class="row" ng-show="purchaseCtrl.isValidInvoice()">
+        <div class="col-sm-12 col-xs-12">  
+            <h3>Productos comprados</h3>
+        </div>
+        
+    </div>
+    
+       
+    
+    
+    <div class="row" ng-show="purchaseCtrl.isValidInvoice()">
+        
+        
+        
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label for="productName">Nombre Producto</label>
+                <input type="text" class="form-control text-uppercase" ng-model="purchaseCtrl.product.name" placeholder="Producto" />
+            </div>
+        </div>
             
-            <div class="col-md-1">
+            <div class="col-md-2  col-sm-3 col-xs-12">
                     <div class="form-group">
                         <label for="productCost">Costo</label>
                         <input type="number" class="form-control" ng-model="purchaseCtrl.product.cost" placeholder="$" min="0.1" />
                     </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1  col-sm-3 col-xs-12">
                     <div class="form-group">
                         <label for="productQty">Cantidad</label>
                         <input type="number" class="form-control" placeholder="#" ng-model="purchaseCtrl.product.qty"  min="1"/>
                     </div>
             </div>
             
-            <div class="col-md-2">
+            <div class="col-md-2  col-sm-3 col-xs-12">
                     <div class="form-group">
                         <label for="productPrice">Precio Venta</label>
                         <input type="number" class="form-control" ng-model="purchaseCtrl.product.price" placeholder="$" min="0.1" />
                     </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2  col-sm-3 col-xs-12">
                     <div class="form-group">
                         <label for="productExpirationDate">Fecha de Vencimiento</label>
                         <input type="date" class="form-control"  ng-model="purchaseCtrl.product.expirationDate" placeholder="dd/mm/aaaa" required />
                     </div>
             </div>
-            <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="productPrice" class="text-muted">_________________</label>
-                            <button type="button" class="btn btn-default ng-class: {disabled: !purchaseCtrl.isValid(purchaseCtrl.product)}" ng-click="purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
-                        </div>
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label for="addToList" class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <button type="button" id="addToList" class="btn btn-default btn-group-justified 
+                        ng-class: {disabled: !purchaseCtrl.isValid(purchaseCtrl.product)}" 
+                            ng-click="purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
                 </div>
-            
-            
-                
+            </div>
+        
             </div>
             
-            <div class="row text-danger">
-                <div class="col-md-4">
-                     <div class="form-group text-uppercase">
-                    {{purchaseCtrl.product.name}}
-                    </div>
+            <div class="row" ng-repeat="product in purchaseCtrl.purchase.products track by $index">
+                <div class="col-md-3 col-sm-6 col-xs-10">
+                    <strong class="text-primary">{{product.name}}</strong>
                 </div>
-                <div class="col-md-1">
-                     <div class="form-group">
-                    {{purchaseCtrl.product.cost | currency}}
-                    </div>
-                </div>
-                <div class="col-md-1">
-                     <div class="form-group">
-                    {{purchaseCtrl.product.qty}}
-                    </div>
-                </div>
-                <div class="col-md-2">
-                     <div class="form-group">
-                    {{purchaseCtrl.product.price | currency}}
-                    </div>
-                </div>
-                <div class="col-md-2">
-                     <div class="form-group">
-                    {{purchaseCtrl.product.expirationDate | date:'dd/MM/yyyy'}}
-                    </div>
-                </div>
-                
-                
+                <div class="col-md-2 col-sm-1 hidden-xs">{{product.cost | currency}}</div>
+                <div class="col-md-1 col-sm-1 hidden-xs">{{product.qty}}</div>
+                <div class="col-md-2 col-sm-1 hidden-xs">{{product.price | currency}}</div>
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                    {{(product.expirationDate) ? (product.expirationDate | date:'dd/MM/yyyy') : 'No expira'}}</div>
+                <div class="col-md-2 col-sm-1 col-xs-1"><a href="#" ng-click="purchaseCtrl.removeProduct($index)">Quitar</a></div>
+                                            
             </div>
             
-            <div class="row">
-                
-                <table class="table">
-                    <tbody >
-                        <tr ng-repeat="product in purchaseCtrl.purchase.products track by $index">
-                            <td class="col-md-4">{{product.name}}</td>
-                            <td class="col-md-1">{{product.cost | currency}}</td>
-                            <td class="col-md-1">{{product.qty}}</td>
-                            <td class="col-md-2">{{product.price | currency}}</td>
-                            <td class="col-md-2">{{(product.expirationDate) ? (product.expirationDate | date:'dd/MM/yyyy') : 'No expira'}}</td>
-                            <td class="col-md-2"><a href="#" ng-click="purchaseCtrl.removeProduct($index)">Quitar</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-            </div>
-            
+    
+    
         </form>
