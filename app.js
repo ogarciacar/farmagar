@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');	
 var parseUrlencoded = bodyParser.urlencoded({ extended: true }); // for parsing       application/x-www-form-urlencoded
+var sha1 = require('./sha1sum');
+
 
 app.use(bodyParser.json()); // for parsing application/json
 
@@ -328,6 +330,7 @@ app.post('/purchases', parseUrlencoded, function(request, response) {
         }
         
         if (isNew) {    // adds a new product
+            p.serialNumber = sha1.sha1sum(p.name);
             p.purchases = [purchaseDetails];
             products.push(p);
         }
