@@ -1,8 +1,16 @@
 <div class="row">
     <div class="col-sm-12"><h1>Productos <small class="hidden-sm hidden-xs">Estado de tu inventario y registro de nuevas ventas</small></h1></div> 
 </div>
-       
-<div class="row">
+
+<div class="row" ng-show="!stock.products.length > 0">
+        <div class="col-sm-12">
+            <blockquote class="text-danger" >
+                <p>No hay productos registrados en el inventario. Ingresar productos a través del <a href ng-click="page.selectView(2); purchaseCtrl.initForm()" data-toggle="collapse" data-target="#farmagar-nav-bar">Módulo de Compras</a></p>
+            </blockquote>
+        </div>
+</div>
+
+<div class="row" ng-show="stock.products.length > 0">
     <div class="col-sm-12">
         <product-stock></product-stock>
     </div>

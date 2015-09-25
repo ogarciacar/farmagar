@@ -12,7 +12,7 @@
 
 <tbody>
     
-<tr ng-repeat="product in stock.products | orderBy : '+name' track by stock.addToTotal(product)" product-item></tr>
+<tr ng-repeat="product in stock.products track by stock.addToTotal(product)" product-item></tr>
             
 </tbody>
 </table>

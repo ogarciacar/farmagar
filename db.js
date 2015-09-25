@@ -12,7 +12,7 @@ exports.MODE_PRODUCTION = MODE_PRODUCTION;
 
 exports.connect = function(mode) {
     
-  state.db = new Redis(6379, '172.17.0.1');
+  state.db = new Redis(6379, '192.168.0.104');
 
   // Use different DB when testing
   if (mode === MODE_TEST) {

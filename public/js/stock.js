@@ -22,7 +22,6 @@
                 stock.totalExpenses = 0;
         
                 this.showProducts = function() {
-                    
                     $http.get('/products').success( function ( data ) {
                         stock.totalToSell = 0;
                         stock.totalExpenses = 0;
