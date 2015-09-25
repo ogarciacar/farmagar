@@ -4,17 +4,15 @@ var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: true }); // for parsing       application/x-www-form-urlencoded
 var sha1 = require('./sha1sum');
 var db = require('./db');
-var products = require('./models/product')
+var products = require('./models/product');
+var sales = require('./models/sale');
 
 
 app.use(bodyParser.json()); // for parsing application/json
 
 app.use(express.static('public'));
 
-var sells = {};
-
 app.get('/products', function(request, response) {
-
     products.all(function (err, items) {
         response.json(items);
     });
@@ -26,32 +24,16 @@ app.get('/sales/:since/:until', function(request, response) {
     
     var until = request.params.until;
     
-    //console.log(since + " - " + until);
-    
-    var salesReport = [];
-    
-    for (var key in sells) {
-        if (key >= since && key <= until) {
-            salesReport.unshift(sells[key]);
-        }
-    }
-
-    response.json(salesReport);
+    sales.salesReport(since, until, function (err, salesReport) {
+        response.json(salesReport);
+    });
 });
 
 app.post('/sale', parseUrlencoded, function(request, response) {
     
     var sale = request.body;
-    var listProd = products.all();
-    for (var i = 0; i < listProd.length; i++) { // applies inventory discounts to the product amount
-        var product = listProd[i];
-        if (sale.product == product.name) {
-            product.qty -= sale.qty;
-            break;
-        }
-    }
     
-    sells[sale.date] = sale;
+    sales.saveSale(sale);
     
     response.status(201).json("OK");
 });
