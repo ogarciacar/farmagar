@@ -25,9 +25,8 @@ exports.savePurchase = function ( purchase ) {
             registrationDate: Date.now()
         }];
         
+        db.get().multi();
         
-        product.serialNumber = sha1.sha1sum(product.name);
-    
         db.get().hget('inventory:search', product.name, function (err, index) {
     
             if (index) { // exists
@@ -41,11 +40,16 @@ exports.savePurchase = function ( purchase ) {
                     db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
                 });
             } else {
+                product.serialNumber = sha1.sha1sum(product.name);
                 db.get().rpush('inventory:products', JSON.stringify(product));
                 db.get().llen('inventory:products', function(err, length) {
                     db.get().hset('inventory:search', product.name, (length-1));
                 });        
             }        
+        });
+        
+        db.get().exec(function (err, result) {
+            //console.log(result);
         });
         
     });

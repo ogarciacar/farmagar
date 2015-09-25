@@ -2,6 +2,8 @@ var db = require('../db');
 
 exports.saveSale = function (sale) {
     
+    db.get().multi();
+    
     db.get().hget('inventory:search', sale.product, function (err, index) {
         if (index) { // exists
             
@@ -18,7 +20,11 @@ exports.saveSale = function (sale) {
         } else {
             console.log("it should send and error");
         }
-    });       
+    });
+    
+    db.get().exec(function (err, result) {
+        //console.log(result);
+    });
 };
 
 exports.salesReport = function (since, until, done) {
