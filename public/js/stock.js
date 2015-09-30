@@ -37,14 +37,15 @@
                 };
                 
                 this.search = function (text) {
-                    
-                    
-                    
-                    $http.get('/search/'+text).success( function ( data ) {
-                        stock.totalToSell = 0;
-                        stock.totalExpenses = 0;
-                        stock.products = data;
-                    });
+                    if (text.length > 0) {
+                        $http.get('/search/'+text).success( function ( data ) {
+                            stock.totalToSell = 0;
+                            stock.totalExpenses = 0;
+                            stock.products = data;
+                        });
+                    } else {
+                        this.showProducts();
+                    }
                 };
             }],
             controllerAs: 'stock'

@@ -50,8 +50,6 @@
             this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
             this.purchase.supplierName = this.purchase.supplierName.toUpperCase();
             this.purchase.invoiceNumber = this.purchase.invoiceNumber.toUpperCase();
-            this.purchase.register = 'orlando.garcia@gmail.com';
-            this.purchase.registrationDate= Date.now();
             
             $http({
                 method: 'POST',

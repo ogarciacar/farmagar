@@ -15,40 +15,48 @@ exports.all = function (done) {
     });
 };
 
+
+
 exports.search = function (prhaseToSearch, done) {
-    console.log(prhaseToSearch.toUpperCase());
+    
     var matchCriteria = '*' + prhaseToSearch.toUpperCase() + '*';
     
     var stream = db.get().hscanStream('inventory:search', { match: matchCriteria});
     
     stream.on('data', function (resultKeys) {
         
-        var indexes = [];    
+        if (resultKeys.length === 0) done (null, resultKeys);
         
-        console.log(resultKeys);
+        var indexes = [];
         
         for (var i = 1; i < resultKeys.length; i = i+2) {
             indexes.push(resultKeys[i]);
         }
         
-        console.log(indexes);
-        
-        done(null, indexes.map(function (index) {
-            
-            var p = this;
-            
+        function loadProduct(index, cb) {
             db.get().lindex('inventory:products', index, function (err, res) {
-                p.product = JSON.parse(res);
-                if (p.product.expirationDate === '') {
-                    p.product.expirationDate = 'No expira';
+                var product = JSON.parse(res);
+                if (product.expirationDate === '') {
+                    product.expirationDate = 'No expira';
                 }
+                cb(null, product);
             });
+        }
+        
+        var products = [];
+        
+        function productLoaded(err, product) {
+            products.push(product);
+            if (products.length === indexes.length) {
+                done(null, products);
+            }
+        }
+
+        
+        indexes.map(function (index) {
             
-            console.log(p.product);
-            
-            return p.product;
-            
-        }));  
+            loadProduct(index, productLoaded);
+        });  
     });
 };
 
