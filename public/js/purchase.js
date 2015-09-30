@@ -45,7 +45,7 @@
             return this.purchase.supplierName && this.purchase.invoiceDate && this.purchase.invoiceNumber;
         };
         
-        this.savePurchase = function ( ) {
+        this.savePurchase = function ( user ) {
             
             this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
             this.purchase.supplierName = this.purchase.supplierName.toUpperCase();

@@ -2,11 +2,11 @@
 <thead>
     <tr>
         <th>Nombre</th>
-        <th class="hidden-xs">Vencimiento</th>
-        <th class="hidden-sm hidden-xs">Costo <span class="text-danger">({{stock.totalExpenses|currency}})</span></th>
-        <th>Cantidad</th>
+        <th ng-hide="!loginCtrl.user" class="hidden-xs">Vencimiento</th>
+        <th ng-hide="!loginCtrl.user" class="hidden-sm hidden-xs">Costo <span class="text-danger">({{stock.totalExpenses|currency}})</span></th>
+        <th ng-hide="!loginCtrl.user">Cantidad</th>
         <th>Precio</th>
-        <th class="hidden-xs">Total <span class="text-success">({{stock.totalToSell|currency}})</span></th>
+        <th ng-hide="!loginCtrl.user" class="hidden-xs">Total <span class="text-success">({{stock.totalToSell|currency}})</span></th>
     </tr>
 </thead>
 

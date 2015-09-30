@@ -1,6 +1,6 @@
 var db = require('../db');
 
-exports.saveSale = function (sale) {
+exports.saveSale = function (sale, username) {
     
     db.get().multi();
     
@@ -13,6 +13,7 @@ exports.saveSale = function (sale) {
                 db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
                 
                 sale.date = Date.now();
+                sale.seller = username;
                 var toStore = JSON.stringify(sale);
                 db.get().zadd('product:sales', sale.date, toStore);
             });

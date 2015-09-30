@@ -1,6 +1,6 @@
 ( function () {
     
-    var app = angular.module('farmagar', [ 'stock', 'purchase', 'sales' ]);
+    var app = angular.module('farmagar', [ 'stock', 'purchase', 'sales', 'identity' ]);
     
     app.controller("PageController", function() {
         

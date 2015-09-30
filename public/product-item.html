@@ -1,19 +1,19 @@
 
 <td>
-    <strong class="text-primary">{{product.name}}</strong><br/><button type="button" 
+    <strong class="text-primary">{{product.name}}</strong><br/><button type="button" ng-show="loginCtrl.user" 
                 class="btn btn-default btn-xs ng-class: {disabled:item.isExpired(product.expirationDate) || item.isSoldOut(product.qty)}" 
-                data-toggle="modal" data-target="#sale{{(item.isExpired(product.expirationDate) || item.isSoldOut(product.qty))?'':$index}}">Registrar venta</button><button type="button" class="btn btn-link btn-xs hidden-sm hidden-xs" data-toggle="modal" data-target="#myModal{{$index}}">Ver compras</button>
-<span class="label label-info" ng-show="product.expirationDate === ''">No expira</span><span class="label label-danger" ng-show="item.isExpired(product.expirationDate)">Expirado</span>
-    <span class="label label-default" ng-show="item.isSoldOut(product.qty)">Agotado</span>
-    <span class="label label-warning" ng-show="item.isNearToExpire(product.expirationDate) && !item.isSoldOut(product.qty)">
+                data-toggle="modal" data-target="#sale{{(item.isExpired(product.expirationDate) || item.isSoldOut(product.qty))?'':$index}}">Registrar venta</button><button ng-show="loginCtrl.user" type="button" class="btn btn-link btn-xs hidden-sm hidden-xs" data-toggle="modal" data-target="#myModal{{$index}}">Ver compras</button>
+<span class="label label-danger" ng-show="loginCtrl.user && item.isExpired(product.expirationDate)">Expirado</span>
+    <span class="label label-default" ng-show="loginCtrl.user && item.isSoldOut(product.qty)">Agotado</span>
+    <span class="label label-warning" ng-show="loginCtrl.user && item.isNearToExpire(product.expirationDate) && !item.isSoldOut(product.qty)">
         Expira en {{ item.daysToExpire(product.expirationDate) | number:0 }} días
     </span>
 </td>
-<td class="hidden-xs">{{product.expirationDate | date:'dd/MM/yyyy'}}</td>
-<td class="hidden-sm hidden-xs">{{product.cost | currency}}</td>
-<td>{{product.qty}}</td>
+<td ng-show="loginCtrl.user" class="hidden-xs">{{product.expirationDate | date:'dd/MM/yyyy'}}</td>
+<td ng-show="loginCtrl.user" class="hidden-sm hidden-xs">{{product.cost | currency}}</td>
+<td ng-show="loginCtrl.user">{{product.qty}}</td>
 <td>{{product.price | currency}}</td>
-<td class="hidden-xs">{{product.qty * product.price | currency}}</td>
+<td ng-show="loginCtrl.user" class="hidden-xs">{{product.qty * product.price | currency}}</td>
 
 
 <sale-form></sale-form>

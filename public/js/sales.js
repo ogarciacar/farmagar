@@ -70,8 +70,6 @@
                     var tx = {
                         product: product.name,
                         qty: sale.qty,
-                        seller: 'orlando.garcia@gmail.com',
-                        date: Date.now(),
                         amount: sale.total(product.price),
                         discount: sale.discount
                     };

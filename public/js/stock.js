@@ -20,6 +20,7 @@
                 stock.products = [ ];
                 stock.totalToSell = 0;
                 stock.totalExpenses = 0;
+                stock.phraseToSearch = '';
         
                 this.showProducts = function() {
                     $http.get('/products').success( function ( data ) {
@@ -33,6 +34,17 @@
                     stock.totalToSell += product.qty * product.price;
                     stock.totalExpenses += product.qty * product.cost;
                     return product.name;
+                };
+                
+                this.search = function (text) {
+                    
+                    
+                    
+                    $http.get('/search/'+text).success( function ( data ) {
+                        stock.totalToSell = 0;
+                        stock.totalExpenses = 0;
+                        stock.products = data;
+                    });
                 };
             }],
             controllerAs: 'stock'

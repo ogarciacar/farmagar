@@ -6,13 +6,53 @@ exports.all = function (done) {
     db.get().sort('inventory:products', "alpha", function (err, items) {
         
         done(err, items.map( function (item) {
-            var product = JSON.parse(item);    
+            var product = JSON.parse(item);
+            if (product.expirationDate === '') {
+                product.expirationDate = 'No expira';
+            }
             return product;
         }));
     });
 };
 
-exports.savePurchase = function ( purchase ) {
+exports.search = function (prhaseToSearch, done) {
+    console.log(prhaseToSearch.toUpperCase());
+    var matchCriteria = '*' + prhaseToSearch.toUpperCase() + '*';
+    
+    var stream = db.get().hscanStream('inventory:search', { match: matchCriteria});
+    
+    stream.on('data', function (resultKeys) {
+        
+        var indexes = [];    
+        
+        console.log(resultKeys);
+        
+        for (var i = 1; i < resultKeys.length; i = i+2) {
+            indexes.push(resultKeys[i]);
+        }
+        
+        console.log(indexes);
+        
+        done(null, indexes.map(function (index) {
+            
+            var p = this;
+            
+            db.get().lindex('inventory:products', index, function (err, res) {
+                p.product = JSON.parse(res);
+                if (p.product.expirationDate === '') {
+                    p.product.expirationDate = 'No expira';
+                }
+            });
+            
+            console.log(p.product);
+            
+            return p.product;
+            
+        }));  
+    });
+};
+
+exports.savePurchase = function ( purchase, username ) {
     
     purchase.products.map(function (product) {
         
@@ -21,7 +61,7 @@ exports.savePurchase = function ( purchase ) {
             invoiceNumber: purchase.invoiceNumber,
             invoiceDate: purchase.invoiceDate,
             qty: product.qty,
-            register: purchase.register,
+            register: username,
             registrationDate: Date.now()
         }];
         

@@ -12,7 +12,7 @@ exports.MODE_PRODUCTION = MODE_PRODUCTION;
 
 exports.connect = function(mode) {
     
-  state.db = new Redis(6379, '10.4.13.74');
+  state.db = new Redis(6379, 'farmagar-db');
 
   // Use different DB when testing
   if (mode === MODE_TEST) {
