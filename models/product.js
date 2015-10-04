@@ -81,9 +81,10 @@ exports.savePurchase = function ( purchase, username ) {
                 db.get().lindex('inventory:products', index, function (err, p) {
                     var toUpdate = JSON.parse(p);
                     toUpdate.qty += product.qty;
-                    toUpdate.expirationDate = product.expirationDate;
-                    toUpdate.cost = product.cost;
-                    toUpdate.price = product.price;
+                    if (product.expirationDate === '' || toUpdate.expirationDate === '' || 
+                        toUpdate.expirationDate > product.expirationDate) toUpdate.expirationDate = product.expirationDate;
+                    if (toUpdate.cost < product.cost) toUpdate.cost = product.cost;
+                    if (toUpdate.price < product.price) toUpdate.price = product.price;
                     toUpdate.purchases = product.purchases.concat(toUpdate.purchases);
                     db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
                 });
