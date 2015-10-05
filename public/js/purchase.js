@@ -42,7 +42,7 @@
         };
         
         this.isValidInvoice = function () {
-            return this.purchase.supplierName && this.purchase.invoiceDate && this.purchase.invoiceNumber;
+            return this.purchase.supplierName && this.purchase.invoiceNumber && this.purchase.invoiceDate;
         };
         
         this.savePurchase = function ( user ) {

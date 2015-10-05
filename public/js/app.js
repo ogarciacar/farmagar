@@ -17,8 +17,8 @@
         this.today = function () {
             var today = new Date();
             today = today.getFullYear() + '-' 
-                + ( (today.getMonth()+1 >= 10) ? (today.getMonth()+1) : ('0'+(today.getMonth()+1))) 
-                + '-' + today.getDate();
+                + ( (today.getMonth()+1 >= 10) ? (today.getMonth()+1) : ('0'+(today.getMonth()+1))) + '-' 
+                + ((today.getDate() > 9) ? today.getDate() : '0'+today.getDate());
             return today;
         };
     });
