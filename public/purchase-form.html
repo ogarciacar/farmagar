@@ -14,6 +14,10 @@
         <div class="col-md-12"><blockquote class="text-success"><p>{{purchaseCtrl.feedback}}</p></blockquote></div>
     </div>
     
+    <div class="row" ng-show="purchaseCtrl.error">
+        <div class="col-md-12"><blockquote class="text-danger"><p>{{purchaseCtrl.error}}</p></blockquote></div>
+    </div>
+    
      <div class="row hidden-xs" ng-show="!purchaseCtrl.isValidInvoice() && !purchaseCtrl.feedback">
             <div class="col-md-12"><blockquote class="text-info"><p>Para registrar una compra debe registrar los datos de la factura y luego agregar los productos comprados</p></blockquote></div>
         </div>

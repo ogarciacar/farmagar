@@ -45,26 +45,29 @@
             return this.purchase.supplierName && this.purchase.invoiceNumber && this.purchase.invoiceDate;
         };
         
-        this.savePurchase = function ( user ) {
+        this.savePurchase = function () {
             
-            this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
-            this.purchase.supplierName = this.purchase.supplierName.toUpperCase();
-            this.purchase.invoiceNumber = this.purchase.invoiceNumber.toUpperCase();
+            if (this.purchase.products.length > 0) {
+                this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
+                this.purchase.supplierName = this.purchase.supplierName.toUpperCase();
+                this.purchase.invoiceNumber = this.purchase.invoiceNumber.toUpperCase();
             
-            $http({
-                method: 'POST',
-                url: '/purchases',
-                data: this.purchase
-            }).then(function(response) {
-                message.feedback = "La compra a " + response.data['supplierName'] + " con factura # " + response.data['invoiceNumber']  + " ha sido guardada exitósamente!";
+                $http({
+                    method: 'POST',
+                    url: '/purchases',
+                    data: this.purchase
+                }).then(function(response) {
+                    message.feedback = "La compra a " + response.data['supplierName'] 
+                        + " con factura # " + response.data['invoiceNumber']  + " ha sido guardada exitósamente!";
                 
-            }, function(response) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+                    this.initForm();
+                }, function(response) {
+                   message.error = 'No se pudo completar la operación debido a que no hay conexión con el sistema.'
+                   + ' Por favor verifique su conexión  e intente de nuevo.';
+                });
             
-            
-            this.initForm();
+                
+            }
             
         }; 
         
