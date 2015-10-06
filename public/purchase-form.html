@@ -44,10 +44,16 @@
                        ng-model="purchaseCtrl.purchase.invoiceNumber" placeholder="# Factura" required />
             </div>
         </div>
+        
+        <script>
+        $(function() {
+            $( "#datepicker" ).datepicker();
+        });
+        </script>
         <div class="col-md-2 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="invoiceDate">Fecha de la Factura</label>
-                <input type="date" class="form-control"
+                <input type="text" id="datepicker" class="form-control"
                        ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="MM-dd-yyyy" max="{{page.today()}}" required />
             </div>
         </div>
