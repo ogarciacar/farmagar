@@ -9,7 +9,7 @@
             controller: [ '$http', function($http) {
                 
             function rep () {
-                
+                report.totalSales = 0;
                 var str = report.since.split("/");
                 var d1 = new Date(str[2], str[1]-1, str[0]);
                 d1.setHours(0, 0, 0, 0);
