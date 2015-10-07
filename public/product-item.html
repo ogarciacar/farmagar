@@ -2,7 +2,7 @@
 <td>
     <strong class="text-primary">{{product.name}}</strong><br/><button type="button" ng-show="loginCtrl.user" 
                 class="btn btn-default btn-xs ng-class: {disabled:item.isExpired(product.expirationDate) || item.isSoldOut(product.qty)}" 
-                data-toggle="modal" data-target="#sale{{(item.isExpired(product.expirationDate) || item.isSoldOut(product.qty))?'':$index}}">Registrar venta</button><button ng-show="loginCtrl.user" type="button" class="btn btn-link btn-xs hidden-sm hidden-xs" data-toggle="modal" data-target="#myModal{{$index}}">Ver compras</button>
+                data-toggle="modal" data-target="#sale{{(item.isExpired(product.expirationDate) || item.isSoldOut(product.qty))?'':product.serialNumber}}">Registrar venta</button><button ng-show="loginCtrl.user" type="button" class="btn btn-link btn-xs hidden-sm hidden-xs" data-toggle="modal" data-target="#myModal{{product.serialNumber}}">Ver compras</button>
 <span class="label label-danger" ng-show="loginCtrl.user && item.isExpired(product.expirationDate)">Expirado</span>
     <span class="label label-default" ng-show="loginCtrl.user && item.isSoldOut(product.qty)">Agotado</span>
     <span class="label label-warning" ng-show="loginCtrl.user && item.isNearToExpire(product.expirationDate) && !item.isSoldOut(product.qty)">

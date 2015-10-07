@@ -8,35 +8,83 @@
             templateUrl: 'sales-report.html',
             controller: [ '$http', function($http) {
                 
+            function rep () {
+                
+                var str = report.since.split("/");
+                var d1 = new Date(str[2], str[1]-1, str[0]);
+                d1.setHours(0, 0, 0, 0);
+                
+                str = report.until.split("/");
+                var d2 = new Date(str[2], str[1]-1, str[0]);
+                d2.setHours(23, 59, 59, 999);
+                
+                $http.get('/sales/'+d1.valueOf()+'/'+d2.valueOf()).success( function ( data ) {
+                    report.sales = data;
+                });
+            
+            }
+                
+            $( "#since" ).datepicker({  dateFormat: "dd/mm/yy", 
+                                                        showOtherMonths: true,
+                                                        selectOtherMonths: true, 
+                                                        changeMonth: true,
+                                                        changeYear: true,
+                                                        minDate: new Date(2015, 9, 1),
+                                                        maxDate: 0,
+                                                        monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                                            "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                        onSelect: function(selectedDate, dpObject) {
+                                                            report.since = selectedDate;
+                                                            rep();
+                                                        },
+                                                        onClose: function( selectedDate ) {
+                                                            $( "#until" ).datepicker( "option", "minDate", selectedDate );
+                                                        }
+                                                     });
+            var start = new Date();
+            start.setHours(0,0,0,0);
+            $( "#since" ).datepicker("setDate", start);
+            $( "#until" ).datepicker({   dateFormat: "dd/mm/yy", 
+                                                            showOtherMonths: true,
+                                                            selectOtherMonths: true, 
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            minDate: new Date(2015, 9, 1),
+                                                            maxDate: 0,
+                                                            monthNames: [   "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                                            "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                            onSelect: function(selectedDate, dpObject) {
+                                                                report.until = selectedDate;
+                                                                rep();                                                            
+                                                            },
+                                                            onClose: function( selectedDate ) {
+                                                                $( "#since" ).datepicker( "option", "maxDate", selectedDate );
+                                                            }
+                                                        });
+        
+                
+                $( "#until" ).datepicker("setDate", new Date());
+                
                 var report = this;
                 
                 report.sales = [ ];
         
                 report.totalSales = 0;
         
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth();
-                var yyyy = today.getFullYear();
-    
-                report.since = new Date(yyyy, mm, dd);
-                report.until = new Date();
-        
+                
+                report.since = $("#since").val();
+                
+                report.until = $("#until").val();
+                
+                
+                
                 this.addToTotal = function (sale) {
                     report.totalSales += sale.amount;
                     return sale.date;
                 };
         
-                this.salesReport = function (s, u) {
-                    
-                    if (!s) report.since = new Date(yyyy, mm, dd);
-                    
-                    if (!u) report.until = new Date();
-                    
-                    report.totalSales = 0;
-                    $http.get('/sales/'+report.since.valueOf()+'/'+report.until.valueOf()).success( function ( data ) {
-                        report.sales = data;
-                    });
+                this.salesReport = function () {
+                    rep();
                 };
             }],
             

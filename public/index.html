@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventario Farmagar</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link href="css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
+
+   
+    
+
 </head>
 
 <body ng-controller="PageController as page">
@@ -24,14 +28,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <img alt="Farmagar" src="img/logo.gif" width="100px">
+                        <a href="/" ng-click="page.selectView(1)"><img alt="Farmagar" src="img/logo.gif" width="100px"></a>
                     </div>
                     
                     <div class="navbar-collapse collapse" id="farmagar-nav-bar" aria-expanded="false" style="height: 1px;">
                         
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" ng-model="stock.prhaseToSearch" ng-change="stock.search(stock.prhaseToSearch)" placeholder="Buscar productos">
+                                <input type="text" class="form-control" ng-model="stock.phraseToSearch" ng-change="stock.search(stock.phraseToSearch); page.selectView(1)" placeholder="Buscar productos">
                             </div>
                         </form>
                         
@@ -60,10 +64,13 @@
     </nav>
     
     
+
+    
+    
     <div class="container">
     
         <stock ng-show='page.isSelected(1)'></stock>
-
+        
         <purchase-form ng-show='page.isSelected(2)'></purchase-form>
 
         <sales-report ng-show='page.isSelected(3)'></sales-report>
@@ -71,11 +78,14 @@
         <login-form ng-show='page.isSelected(4)'></login-form>
     
     </div>
-
-<script src="js/angular.min.js"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/bootstrap.min.js"></script>
+    
+    <script src="js/angular.min.js"></script>
+    
+    <script src="js/jquery-1.11.3.min.js"></script>
+    
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
 <script type="text/javascript" src="js/stock.js"></script>
 <script type="text/javascript" src="js/purchase.js"></script>
 <script type="text/javascript" src="js/sales.js"></script>

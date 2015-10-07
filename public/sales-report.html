@@ -4,13 +4,11 @@
         </div>
         <div ng-hide="loginCtrl.isSalesUser(loginCtrl.user.profile)" class="col-md-2 col-md-offset-2 col-sm-3 col-xs-6">
             <label for="since">Desde</label>
-            <input type="date" class="form-control col-md-4" id="since" 
-                ng-change="salesCtrl.salesReport(salesCtrl.since, salesCtrl.until)" ng-model="salesCtrl.since" placeholder="dd/mm/aaaa"/>
+            <input type="text" class="form-control col-md-4" id="since" placeholder="dd/mm/aaaa"/>
         </div>
         <div ng-hide="loginCtrl.isSalesUser(loginCtrl.user.profile)" class="col-md-2 col-sm-3 col-xs-6">
             <label for="until">Hasta</label>
-            <input type="date" class="form-control col-md-4" id="until" 
-                   ng-change="salesCtrl.salesReport(salesCtrl.since, salesCtrl.until)" ng-model="salesCtrl.until" max="{{page.today()}}" placeholder="dd/mm/aaaa"/>
+            <input type="text" class="form-control col-md-4" id="until" placeholder="dd/mm/aaaa"/>
         </div>
     </div>
     

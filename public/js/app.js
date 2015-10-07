@@ -20,7 +20,9 @@
                 + ( (today.getMonth()+1 >= 10) ? (today.getMonth()+1) : ('0'+(today.getMonth()+1))) + '-' 
                 + ((today.getDate() > 9) ? today.getDate() : '0'+today.getDate());
             return today;
-        };
+        };        
     });
+    
+    
     
 })();

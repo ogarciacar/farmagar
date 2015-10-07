@@ -30,14 +30,23 @@
     </div>
     
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="supplierName">Nombre del Proveedor</label>
                 <input type="text" ng-focus="purchaseCtrl.feedback = ''" 
                        class="form-control text-uppercase" ng-model="purchaseCtrl.purchase.supplierName" placeholder="Proveedor" required />
             </div>
         </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
+        
+        <div class="col-md-2 col-sm-4 col-xs-12">
+            <div class="form-group">
+                <label for="datepickerInvoiceDate">Fecha de la Factura</label>
+                <input type="text" id="datepickerInvoiceDate" class="form-control" 
+                       ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="dd/mm/aaaa" required />
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
                 <label for="invoiceNumber">Número de Factura</label>
                 <input type="text" class="form-control text-uppercase" 
@@ -45,20 +54,10 @@
             </div>
         </div>
         
-        <script>
-        $(function() {
-            $( "#datepicker" ).datepicker();
-        });
-        </script>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <div class="form-group">
-                <label for="invoiceDate">Fecha de la Factura</label>
-                <input type="text" id="datepicker" class="form-control"
-                       ng-model="purchaseCtrl.purchase.invoiceDate" placeholder="MM-dd-yyyy" max="{{page.today()}}" required />
-            </div>
-        </div>
         
-        <div class="col-md-2 col-sm-6 col-xs-12">
+        
+        
+        <div class="col-md-2 col-sm-4 col-xs-12">
             <div class="form-group">
                 <label for="saveButton" class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <button type="submit" id="saveButton" class="btn btn-primary btn-group-justified ng-class: {disabled : !purchaseCtrl.purchase.products.length > 0}">Guardar compra</button></div>
@@ -107,8 +106,9 @@
             </div>
             <div class="col-md-2  col-sm-3 col-xs-12">
                     <div class="form-group">
-                        <label for="productExpirationDate">Fecha de Vencimiento</label>
-                        <input type="date" class="form-control"  ng-model="purchaseCtrl.product.expirationDate" placeholder="dd/mm/aaaa" required />
+                        <label for="productExpirationDate">Vence</label>
+                        <input type="text" id="datepickerExpirationDate"
+                               class="form-control"  ng-model="purchaseCtrl.product.expirationDate" placeholder="dd/mm/aaaa" required />
                     </div>
             </div>
             <div class="col-md-2 col-sm-6 col-xs-12">

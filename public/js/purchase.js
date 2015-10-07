@@ -7,34 +7,75 @@
             restrict: 'E',
             templateUrl: 'purchase-form.html',
             controller: [ '$http', function($http) {
+                
+            $( "#datepickerInvoiceDate" ).datepicker({  dateFormat: "dd/mm/yy", 
+                                                        showOtherMonths: true,
+                                                        selectOtherMonths: true, 
+                                                        changeMonth: true,
+                                                        changeYear: true,
+                                                        maxDate: 0,
+                                                        monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                                            "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                        onSelect: function(selectedDate, dpObject) {
+                                                            localScope.purchase.invoiceDate = selectedDate;    
+                                                        }
+                                                     });
+            
+            $( "#datepickerExpirationDate" ).datepicker({   dateFormat: "dd/mm/yy", 
+                                                            showOtherMonths: true,
+                                                            selectOtherMonths: true, 
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            minDate: +30,
+                                                            monthNames: [   "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                                            "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                            onSelect: function(selectedDate, dpObject) {
+                                                                localScope.product.expirationDate = selectedDate;    
+                                                            }
+                                                        });
         
-        var message = this;
-        message.feedback = '';
+            
+            
+                
+                
         
-        this.purchase = {
+        var localScope = this;
+                
+        localScope.feedback = '';
+        
+        localScope.purchase = {
             
             products: []
         };
         
-        this.product = {};
+        localScope.product = {};
                 
         this.initForm = function () {
-            message.feedback = '';
-            this.product = {};
-            this.purchase = {
+            localScope.feedback = '';
+            localScope.product = {};
+            localScope.purchase = {
                 products: []
             };
+
+            
         };        
         
         this.addProduct = function ( product ) {
-            product.expirationDate = (this.product.expirationDate) ? this.product.expirationDate.valueOf() : '';
+            if (localScope.product.expirationDate) {
+                var date = product.expirationDate.split("/");
+                product.expirationDate = new Date(date[2], date[1]-1, date[0]).valueOf();
+            } else {
+                product.expirationDate = '';
+            }
+            
             product.name = product.name.toUpperCase();
-            this.purchase.products.unshift(product);
-            this.product = {};
+            localScope.purchase.products.unshift(product);
+            localScope.product = {};
+            $( "#datepickerExpirationDate" ).val('');
         };
         
         this.removeProduct = function ( productIndex ) {
-            this.purchase.products.splice(productIndex, 1);
+            localScope.purchase.products.splice(productIndex, 1);
         };
 
         this.isValid = function ( p ) {
@@ -42,31 +83,33 @@
         };
         
         this.isValidInvoice = function () {
-            return this.purchase.supplierName && this.purchase.invoiceNumber && this.purchase.invoiceDate;
+            return localScope.purchase.supplierName && localScope.purchase.invoiceNumber && localScope.purchase.invoiceDate;
         };
         
         this.savePurchase = function () {
             
-            if (this.purchase.products.length > 0) {
-                this.purchase.invoiceDate = this.purchase.invoiceDate.valueOf();
-                this.purchase.supplierName = this.purchase.supplierName.toUpperCase();
-                this.purchase.invoiceNumber = this.purchase.invoiceNumber.toUpperCase();
+            if (localScope.purchase.products.length > 0) {
+                var date = localScope.purchase.invoiceDate.split("/");
+                localScope.purchase.invoiceDate = new Date(date[2], date[1]-1, date[0]).valueOf();
+                localScope.purchase.supplierName = localScope.purchase.supplierName.toUpperCase();
+                localScope.purchase.invoiceNumber = localScope.purchase.invoiceNumber.toUpperCase();
             
                 $http({
                     method: 'POST',
                     url: '/purchases',
-                    data: this.purchase
+                    data: localScope.purchase
                 }).then(function(response) {
-                    message.feedback = "La compra a " + response.data['supplierName'] 
+                    localScope.feedback = "La compra a " + response.data['supplierName'] 
                         + " con factura # " + response.data['invoiceNumber']  + " ha sido guardada exitósamente!";
-                
-                    this.initForm();
+                    
+                    localScope.product = {};
+                    localScope.purchase = {
+                        products: []
+                    };  
                 }, function(response) {
-                   message.error = 'No se pudo completar la operación debido a que no hay conexión con el sistema.'
+                   localScope.error = 'No se pudo completar la operación debido a que no hay conexión con el sistema.'
                    + ' Por favor verifique su conexión  e intente de nuevo.';
                 });
-            
-                
             }
             
         }; 
