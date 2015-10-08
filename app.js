@@ -34,10 +34,24 @@ app.get('/search/:phraseToSearch', function(request, response) {
     
     var phraseToSearch = request.params.phraseToSearch;
     
+    if (!phraseToSearch) phraseToSearch = request.query.term;
+    
     products.search(phraseToSearch, function (err, items) {
         response.json(items);
     });
 });
+
+app.get('/search', function(request, response) {
+    
+    var phraseToSearch = request.query.term;
+    
+    products.search(phraseToSearch, function (err, items) {
+        response.json(items.map(function (product) {
+            return product.name;
+        }));
+    });
+});
+
 
 app.get('/sales/:since/:until', function(request, response) {
     

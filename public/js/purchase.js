@@ -7,7 +7,15 @@
             restrict: 'E',
             templateUrl: 'purchase-form.html',
             controller: [ '$http', function($http) {
-                
+            
+            $( "#productAutocomplete" ).autocomplete({
+                source: '/search/',
+                minLength: 2,
+                select: function( event, ui ) {
+                    localScope.product.name = ui.item.value;
+                }
+            });
+            
             $( "#datepickerInvoiceDate" ).datepicker({  dateFormat: "dd/mm/yy", 
                                                         showOtherMonths: true,
                                                         selectOtherMonths: true, 
