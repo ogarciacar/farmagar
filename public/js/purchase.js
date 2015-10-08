@@ -11,8 +11,8 @@
             $( "#productAutocomplete" ).autocomplete({
                 source: '/search/',
                 minLength: 2,
-                select: function( event, ui ) {
-                    localScope.product.name = ui.item.value;
+                close: function( event, ui ) {
+                    (ui.item) ? localScope.product.name = ui.item.value : localScope.product.name = this.value.toUpperCase();
                 }
             });
             
@@ -85,13 +85,17 @@
                 $( "#datepickerExpirationDate" ).val('');
                 localScope.addedProducts[product.name] = product;
             } else {
+                localScope.product = {};
                 localScope.error = product.name 
                     + ' no se pudo agregar a la lista de comprados debido a que ya existe uno igual en la misma.';   
             }
         };
         
         this.removeProduct = function ( productIndex ) {
+            var removeMe = localScope.purchase.products[productIndex];
+            delete localScope.addedProducts[removeMe.name];
             localScope.purchase.products.splice(productIndex, 1);
+             localScope.error = '';
         };
 
         this.isValid = function ( p ) {
