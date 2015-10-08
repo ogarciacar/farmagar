@@ -107,6 +107,7 @@
                         update.newName = '';
                         update.feedback = 'El producto con nombre ' 
                             + response.data['changedName'] + ' fue cambiado exitosamente a ' + response.data['newName'];
+                        product.name = newName.toUpperCase();
                     }, function(response) {
                         console.log("ERR");
                     });
