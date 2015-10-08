@@ -50,36 +50,44 @@
         var localScope = this;
                 
         localScope.feedback = '';
-        
+        localScope.addedProducts = {};
         localScope.purchase = {
-            
             products: []
         };
-        
+                
         localScope.product = {};
                 
         this.initForm = function () {
             localScope.feedback = '';
+             localScope.error = '';
             localScope.product = {};
             localScope.purchase = {
                 products: []
             };
-
-            
+            localScope.addedProducts = {};
         };        
         
         this.addProduct = function ( product ) {
-            if (localScope.product.expirationDate) {
+            
+            var hasBeenPreviouslyAdded = localScope.addedProducts[product.name];
+            
+            if (!hasBeenPreviouslyAdded) {
+                if (localScope.product.expirationDate) {
                 var date = product.expirationDate.split("/");
                 product.expirationDate = new Date(date[2], date[1]-1, date[0]).valueOf();
-            } else {
-                product.expirationDate = '';
-            }
+                } else {
+                    product.expirationDate = '';
+                }
             
-            product.name = product.name.toUpperCase();
-            localScope.purchase.products.unshift(product);
-            localScope.product = {};
-            $( "#datepickerExpirationDate" ).val('');
+                product.name = product.name.toUpperCase();
+                localScope.purchase.products.unshift(product);
+                localScope.product = {};
+                $( "#datepickerExpirationDate" ).val('');
+                localScope.addedProducts[product.name] = product;
+            } else {
+                localScope.error = product.name 
+                    + ' no se pudo agregar a la lista de comprados debido a que ya existe uno igual en la misma.';   
+            }
         };
         
         this.removeProduct = function ( productIndex ) {
@@ -113,7 +121,8 @@
                     localScope.product = {};
                     localScope.purchase = {
                         products: []
-                    };  
+                    };
+                    localScope.error = '';
                 }, function(response) {
                    localScope.error = 'No se pudo completar la operación debido a que no hay conexión con el sistema.'
                    + ' Por favor verifique su conexión  e intente de nuevo.';
