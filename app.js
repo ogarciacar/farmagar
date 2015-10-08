@@ -73,6 +73,15 @@ app.post('/sale', parseUrlencoded, function(request, response) {
     response.status(201).json("OK");
 });
 
+app.post('/update/:newName', parseUrlencoded, function(request, response) {
+    
+    var newName = request.params.newName;
+    
+    var product = request.body;
+    
+    response.status(200).json(products.updateProductName(product, newName));
+});
+
 app.post('/purchases', parseUrlencoded, function(request, response) {
     
     var purchase = request.body;

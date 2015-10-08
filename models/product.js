@@ -110,3 +110,27 @@ exports.savePurchase = function ( purchase, username ) {
     
     return messageData; 
 };
+
+exports.updateProductName = function ( product, newName ) {
+    
+    db.get().hget('inventory:search', product.name, function (err, index) {
+    
+        db.get().lindex('inventory:products', index, function (err, p) {
+            
+            var toUpdate = JSON.parse(p);
+            
+            toUpdate.name = newName;
+            
+            db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
+            
+            db.get().hdel('inventory:search', product.name);
+            
+            db.get().hset('inventory:search', newName, index);
+        });       
+    });
+    
+    return { 
+        changedName : product.name,
+        newName : newName
+    };    
+};

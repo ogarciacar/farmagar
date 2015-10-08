@@ -82,4 +82,38 @@
         };
     });
     
+    app.directive('updateName', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'update-name.html',
+            controller: [ '$http', function($http) {
+                
+                var update = this;
+                update.newName = '';
+                
+                this.isSafeUpdate = function (currentName, newName) {
+                    return newName && currentName != newName.toUpperCase() && newName.length > 0;
+                };
+                
+                this.updateName = function (product, newName) {
+                    var urlString = '/update/' + newName.toUpperCase();
+                    
+                    $http({
+                        method: 'POST',
+                        url: urlString,
+                        data: product
+                    }).then(function(response) {
+                        console.log("Success " +  response.data['changedName'] + ' ' + response.data['newName'])
+                        update.newName = '';
+                        update.feedback = 'El producto con nombre ' 
+                            + response.data['changedName'] + ' fue cambiado exitosamente a ' + response.data['newName'];
+                    }, function(response) {
+                        console.log("ERR");
+                    });
+                };
+            }],
+            controllerAs: 'updateNameCtrl'
+        };
+    });
+    
 })();
