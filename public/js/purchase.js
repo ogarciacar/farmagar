@@ -15,6 +15,14 @@
                     (ui.item) ? localScope.product.name = ui.item.value : localScope.product.name = this.value.toUpperCase();
                 }
             });
+                
+            $( "#supplierAutocomplete" ).autocomplete({
+                source: '/suppliers',
+                minLength: 2,
+                close: function( event, ui ) {
+                    (ui.item) ? localScope.purchase.supplierName = ui.item.value : localScope.purchase.supplierName = this.value.toUpperCase();
+                }
+            });
             
             $( "#datepickerInvoiceDate" ).datepicker({  dateFormat: "dd/mm/yy", 
                                                         showOtherMonths: true,

@@ -34,9 +34,15 @@ app.get('/search/:phraseToSearch', function(request, response) {
     
     var phraseToSearch = request.params.phraseToSearch;
     
-    if (!phraseToSearch) phraseToSearch = request.query.term;
-    
     products.search(phraseToSearch, function (err, items) {
+        response.json(items);
+    });
+});
+
+app.get('/suppliers', function(request, response) {
+    
+    var phraseToSearch = request.query.term;
+    products.searchOnSuppliers(phraseToSearch, function (err, items) {
         response.json(items);
     });
 });

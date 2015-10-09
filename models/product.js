@@ -7,25 +7,29 @@ exports.all = function (done) {
         
         done(err, items.map( function (item) {
             
-            if (item === "{}") {
-                return undefined;
-            } else {
-                
-                var product = JSON.parse(item);
+            var product = JSON.parse(item);
             
-                if (product.expirationDate === '') {
-                    product.expirationDate = 'No expira';
-                }
-                
-                return product;
+            if (product.expirationDate === '') {
+                product.expirationDate = 'No expira';
             }
+            
+            return product;
             
         }));
             
     });
 };
 
-
+exports.searchOnSuppliers = function (phraseToMatch, done) {
+    
+    var matchCriteria = '*' + phraseToMatch.toUpperCase() + '*';
+    
+    var stream = db.get().sscanStream('product:suppliers', { match: matchCriteria});
+    
+    stream.on('data', function (suppliers) {
+        done (null, suppliers);
+    });
+};
 
 exports.search = function (prhaseToSearch, done) {
     
@@ -103,7 +107,9 @@ exports.savePurchase = function ( purchase, username ) {
                 db.get().rpush('inventory:products', JSON.stringify(product));
                 db.get().llen('inventory:products', function(err, length) {
                     db.get().hset('inventory:search', product.name, (length-1));
-                });        
+                });
+                
+                db.get().sadd('product:suppliers', purchase.supplierName);
             }        
         });
         
