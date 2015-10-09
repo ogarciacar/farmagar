@@ -165,7 +165,7 @@ exports.updateProductName = function ( product, newName ) {
         }); // index for updates or deletion
     }
     
-    
+    db.get().multi();
     db.get().hget('inventory:search', newName, function (err, index) {
         
         if (index) {
@@ -188,6 +188,9 @@ exports.updateProductName = function ( product, newName ) {
                 });
             });
         }
+    });
+    db.get().exec(function (err, result) {
+            //console.log(result);
     });
     
     return { 
