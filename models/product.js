@@ -6,12 +6,22 @@ exports.all = function (done) {
     db.get().sort('inventory:products', "alpha", function (err, items) {
         
         done(err, items.map( function (item) {
-            var product = JSON.parse(item);
-            if (product.expirationDate === '') {
-                product.expirationDate = 'No expira';
+            
+            if (item === "{}") {
+                return undefined;
+            } else {
+                
+                var product = JSON.parse(item);
+            
+                if (product.expirationDate === '') {
+                    product.expirationDate = 'No expira';
+                }
+                
+                return product;
             }
-            return product;
+            
         }));
+            
     });
 };
 
@@ -113,20 +123,71 @@ exports.savePurchase = function ( purchase, username ) {
 
 exports.updateProductName = function ( product, newName ) {
     
-    db.get().hget('inventory:search', product.name, function (err, index) {
+    function loadProduct(index, cb) {
+        db.get().lindex('inventory:products', index, function (err, productString) {
+            cb(index, JSON.parse(productString));
+        });
+    }
     
-        db.get().lindex('inventory:products', index, function (err, p) {
+    function deprecate(index, toDeprecate) {
+        
+        db.get().lrem('inventory:products', 0, JSON.stringify(toDeprecate));
+        //db.get().lset('inventory:products', index, JSON.stringify({}));
+        db.get().hdel('inventory:search', toDeprecate.name);
+        
+        db.get().lrange('inventory:products', index, -1, function(err, items) {
             
-            var toUpdate = JSON.parse(p);
+            items.map(function (productString) {
+                var product = JSON.parse(productString);
+                db.get().hset('inventory:search', product.name, index++);    
+            });
+        });
+        
+    }
+    
+    function merge(index, toMerge) {
+        
+        toMerge.qty += product.qty;
+        
+        if (product.expirationDate === '' || toMerge.expirationDate === '' || 
+            toMerge.expirationDate > product.expirationDate) toMerge.expirationDate = product.expirationDate;
+        if (toMerge.cost < product.cost) toMerge.cost = product.cost;
+        if (toMerge.price < product.price) toMerge.price = product.price;
+        
+        toMerge.purchases = product.purchases.concat(toMerge.purchases);
+        
+        db.get().lset('inventory:products', index, JSON.stringify(toMerge));
+        
+        db.get().hget('inventory:search', product.name, function (err, index2) {
             
-            toUpdate.name = newName;
+            loadProduct(index2, deprecate);
             
-            db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
-            
-            db.get().hdel('inventory:search', product.name);
-            
-            db.get().hset('inventory:search', newName, index);
-        });       
+        }); // index for updates or deletion
+    }
+    
+    
+    db.get().hget('inventory:search', newName, function (err, index) {
+        
+        if (index) {
+            loadProduct(index, merge);
+        } else {
+            db.get().hget('inventory:search', product.name, function (err, index) {
+
+                db.get().lindex('inventory:products', index, function (err, p) {
+
+                    var toUpdate = JSON.parse(p);
+                    
+                    toUpdate.name = newName;
+                    
+                    db.get().lset('inventory:products', index, JSON.stringify(toUpdate));
+                    
+                    db.get().hdel('inventory:search', product.name);
+                    
+                    db.get().hset('inventory:search', newName, index);
+                    
+                });
+            });
+        }
     });
     
     return { 

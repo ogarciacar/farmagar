@@ -3,7 +3,7 @@
                     <div class="modal fade" id="updateName{{product.serialNumber}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form ng-submit="updateNameCtrl.isSafeUpdate(product.name, updateNameCtrl.newName) && updateNameCtrl.updateName(product, updateNameCtrl.newName)" novalidate>
+                                <form ng-submit="updateNameCtrl.isSafeUpdate(product.name, updateNameCtrl.newName) && updateNameCtrl.updateName(product, updateNameCtrl.newName, stock.showProducts)" novalidate ng-init="updateNameCtrl.newName = product.name">
                                 
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -18,7 +18,7 @@
                                     
                                     <div class="form-group">
                                         
-                                        <div class="input-group">
+                                        <div class="input-group" ng-show="!updateNameCtrl.mustClose">
                                             <label ng-show="!updateNameCtrl.isSafeUpdate(product.name, updateNameCtrl.newName)" for="newName{{product.serialNumber}}">Nombre actual</label>
                                             <label ng-show="updateNameCtrl.isSafeUpdate(product.name, updateNameCtrl.newName)" for="newName{{product.serialNumber}}">{{product.name}} será cambiado por:</label>
                                             <input type="text" id="newName{{product.serialNumber}}" 

@@ -89,25 +89,32 @@
             controller: [ '$http', function($http) {
                 
                 var update = this;
-                update.newName = '';
+                update.mustClose = false;
                 
                 this.isSafeUpdate = function (currentName, newName) {
-                    return newName && currentName != newName.toUpperCase() && newName.length > 0;
+                    return newName && currentName != newName.toUpperCase() && newName.length > 0 && !update.mustClose;
                 };
                 
-                this.updateName = function (product, newName) {
+                this.updateName = function (product, newName, reloadProductsCallback) {
                     var urlString = '/update/' + newName.toUpperCase();
                     
                     $http({
                         method: 'POST',
                         url: urlString,
                         data: product
-                    }).then(function(response) {
-                        console.log("Success " +  response.data['changedName'] + ' ' + response.data['newName'])
+                    }).then( function(response) {
+                        
                         update.newName = '';
+                        
                         update.feedback = 'El producto con nombre ' 
                             + response.data['changedName'] + ' fue cambiado exitosamente a ' + response.data['newName'];
+                        
                         product.name = newName.toUpperCase();
+                        update.mustClose = true;
+                        $('#updateName'+product.serialNumber).on('hidden.bs.modal', function (e) {
+                            reloadProductsCallback();    
+                        })
+                        
                     }, function(response) {
                         console.log("ERR");
                     });

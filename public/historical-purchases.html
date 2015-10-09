@@ -11,7 +11,7 @@
                                     <h4 class="modal-title" id="myModalLabel">Histórico de compras de {{product.name}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate'">
+                                    <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate' | limitTo: 5">
                                         <h5><b>Proveedor: </b>{{purchase.supplier}}</h5>
                                         <h6><b>Factura </b># {{purchase.invoiceNumber}} del {{purchase.invoiceDate | date:'dd/MM/yyyy'}} | 
                                         <b>Cantidad comprada: </b>{{purchase.qty}}</h6>
