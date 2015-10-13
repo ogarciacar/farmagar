@@ -3,7 +3,7 @@ var sha1 = require('../sha1sum');
 
 exports.all = function (done) {
     
-    db.get().sort('inventory:products', "alpha", function (err, items) {
+    db.get().sort('inventory:products', 'limit', 0, 50, "alpha", function (err, items) {
         
         done(err, items.map( function (item) {
             
