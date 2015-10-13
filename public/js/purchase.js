@@ -56,7 +56,7 @@
                 
         
         var localScope = this;
-                
+        localScope.credit = false;        
         localScope.feedback = '';
         localScope.addedProducts = {};
         localScope.purchase = {
@@ -73,6 +73,14 @@
                 products: []
             };
             localScope.addedProducts = {};
+        };
+                
+        this.setCredit = function (val) {
+            localScope.credit = val;
+        };
+        
+        this.isCredit = function () {
+            return localScope.credit;
         };        
         
         this.addProduct = function ( product ) {
@@ -86,11 +94,14 @@
                 } else {
                     product.expirationDate = '';
                 }
-            
+                
                 product.name = product.name.toUpperCase();
+                if (localScope.credit) localScope.product.qty *= -1;
+                
                 localScope.purchase.products.unshift(product);
                 localScope.product = {};
                 $( "#datepickerExpirationDate" ).val('');
+                
                 localScope.addedProducts[product.name] = product;
             } else {
                 localScope.product = {};
@@ -121,7 +132,7 @@
                 localScope.purchase.invoiceDate = new Date(date[2], date[1]-1, date[0]).valueOf();
                 localScope.purchase.supplierName = localScope.purchase.supplierName.toUpperCase();
                 localScope.purchase.invoiceNumber = localScope.purchase.invoiceNumber.toUpperCase();
-            
+                
                 $http({
                     method: 'POST',
                     url: '/purchases',

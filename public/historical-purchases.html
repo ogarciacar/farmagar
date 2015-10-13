@@ -12,7 +12,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <blockquote ng-repeat="purchase in product.purchases | orderBy : '+invocieDate' | limitTo: 5">
-                                        <h5><b>Proveedor: </b>{{purchase.supplier}}</h5>
+                                        <h5><b>Proveedor: </b>{{purchase.supplier}} <span class="label label-info" ng-show="purchase.qty < 0">Nota de crédito</span></h5>
                                         <h6><b>Factura </b># {{purchase.invoiceNumber}} del {{purchase.invoiceDate | date:'dd/MM/yyyy'}} | 
                                         <b>Cantidad comprada: </b>{{purchase.qty}}</h6>
                                         <h6>Compra registrada el {{purchase.registrationDate|date: 'dd/MM/yyyy'}} por 
