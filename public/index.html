@@ -47,7 +47,7 @@
                             <li ng-show="loginCtrl.user" ng-class="{active: page.isSelected(2)}">
                                 <a href ng-click="page.selectView(2); purchaseCtrl.setCredit(false)" data-toggle="collapse" data-target="#farmagar-nav-bar"><small>Registrar compra</small></a>
                             </li>
-                            <li ng-show="loginCtrl.user" ng-hide="loginCtrl.isSalesUser(loginCtrl.user.profile)" ng-class="{active: page.isSelected(5)}">
+                            <li ng-show="loginCtrl.user && !loginCtrl.isSalesUser(loginCtrl.user.profile)" ng-class="{active: page.isSelected(5)}">
                                 <a href ng-click="page.selectView(5); purchaseCtrl.setCredit(true)" data-toggle="collapse" data-target="#farmagar-nav-bar"><small>Nota de crédito</small></a>
                             </li>
                             <li ng-show="loginCtrl.user" ng-class="{active: page.isSelected(3)}">
