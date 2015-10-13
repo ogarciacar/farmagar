@@ -118,7 +118,7 @@
                     <label for="addToList" class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <button type="button" id="addToList" class="btn btn-default btn-group-justified 
                         ng-class: {disabled: !purchaseCtrl.isValid(purchaseCtrl.product)}" 
-                            ng-click="purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
+                            ng-click="purchaseCtrl.isValid(purchaseCtrl.product) && purchaseCtrl.addProduct(purchaseCtrl.product)">Agregar a la lista</button>
                 </div>
             </div>
         
