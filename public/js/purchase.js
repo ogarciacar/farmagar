@@ -105,6 +105,9 @@
                 $( "#datepickerExpirationDate" ).val('');
                 
                 localScope.addedProducts[product.name] = product;
+                
+                $("#productAutocomplete").focus();
+                
             } else {
                 localScope.product = {};
                 localScope.error = product.name 
