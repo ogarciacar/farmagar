@@ -33,6 +33,7 @@
                                                         maxDate: 0,
                                                         monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
                                                                             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
                                                         onSelect: function(selectedDate, dpObject) {
                                                             report.since = selectedDate;
                                                             rep();
@@ -51,8 +52,9 @@
                                                             changeYear: true,
                                                             minDate: new Date(2015, 9, 1),
                                                             maxDate: 0,
-                                                            monthNames: [   "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                            monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
                                                                             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                            dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
                                                             onSelect: function(selectedDate, dpObject) {
                                                                 report.until = selectedDate;
                                                                 rep();                                                            

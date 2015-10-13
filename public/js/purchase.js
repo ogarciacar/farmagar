@@ -32,6 +32,7 @@
                                                         maxDate: 0,
                                                         monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
                                                                             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                        dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
                                                         onSelect: function(selectedDate, dpObject) {
                                                             localScope.purchase.invoiceDate = selectedDate;    
                                                         }
@@ -43,8 +44,9 @@
                                                             changeMonth: true,
                                                             changeYear: true,
                                                             minDate: +30,
-                                                            monthNames: [   "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                                            monthNamesShort: [  "Ene", "Feb", "Mar", "Abr", "May", "Jun", 
                                                                             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+                                                            dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
                                                             onSelect: function(selectedDate, dpObject) {
                                                                 localScope.product.expirationDate = selectedDate;    
                                                             }
