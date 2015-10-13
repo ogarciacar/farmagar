@@ -79,11 +79,13 @@ app.post('/sale', parseUrlencoded, function(request, response) {
     response.status(201).json("OK");
 });
 
-app.post('/update/:newName', parseUrlencoded, function(request, response) {
+app.post('/update', parseUrlencoded, function(request, response) {
     
-    var newName = request.params.newName;
+    var update = request.body;
     
-    var product = request.body;
+    var newName = update.newName;
+    
+    var product = update.product;
     
     response.status(200).json(products.updateProductName(product, newName));
 });

@@ -95,13 +95,12 @@
                     return newName && currentName != newName.toUpperCase() && newName.length > 0 && !update.mustClose;
                 };
                 
-                this.updateName = function (product, newName, reloadProductsCallback) {
-                    var urlString = '/update/' + newName.toUpperCase();
-                    
+                this.updateName = function (product, newName, reloadProductsCallback, listener) {
+                    var updateRequest = { newName: newName.toUpperCase(), product: product};
                     $http({
                         method: 'POST',
-                        url: urlString,
-                        data: product
+                        url: '/update',
+                        data: updateRequest
                     }).then( function(response) {
                         
                         update.newName = '';
@@ -111,7 +110,8 @@
                         
                         product.name = newName.toUpperCase();
                         update.mustClose = true;
-                        $('#updateName'+product.serialNumber).on('hidden.bs.modal', function (e) {
+                        var modalId = '#updateName'+listener; 
+                        $(modalId).on('hidden.bs.modal', function (e) {
                             reloadProductsCallback();    
                         })
                         
