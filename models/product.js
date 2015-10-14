@@ -1,9 +1,9 @@
 var db = require('../db');
 var sha1 = require('../sha1sum');
 
-exports.all = function (done) {
+exports.all = function (start, stop, done) {
     
-    db.get().sort('inventory:products', 'limit', 0, 50, "alpha", function (err, items) {
+    db.get().sort('inventory:products', 'limit', start, stop, "alpha", function (err, items) {
         
         done(err, items.map( function (item) {
             
@@ -35,11 +35,11 @@ exports.search = function (prhaseToSearch, done) {
     
     var matchCriteria = '*' + prhaseToSearch.toUpperCase() + '*';
     
-    var stream = db.get().hscanStream('inventory:search', { match: matchCriteria});
+    var stream = db.get().hscanStream('inventory:search', { match: matchCriteria, count: 10000});
     
     stream.on('data', function (resultKeys) {
         
-        if (resultKeys.length === 0) done (null, resultKeys);
+        if (resultKeys.length == 0) done (null, resultKeys);
         
         var indexes = [];
         
@@ -61,7 +61,7 @@ exports.search = function (prhaseToSearch, done) {
         
         function productLoaded(err, product) {
             products.push(product);
-            if (products.length === indexes.length) {
+            if (products.length == indexes.length) {
                 done(null, products);
             }
         }

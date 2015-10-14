@@ -12,6 +12,7 @@ var sales = require('./models/sale');
 var auth = require('./middleware/authentication');
 
 
+
 app.use(bodyParser.json()); // for parsing application/json
 
 app.use(cookieParser('cool secret session'));
@@ -24,8 +25,10 @@ app.use(auth.authenticated);
 
 app.use(express.static('public'));
 
-app.get('/products', function(request, response) {
-    products.all(function (err, items) {
+app.get('/products/:start/:stop', function(request, response) {
+    var start = request.params.start;
+    var stop = request.params.stop;
+    products.all(start, stop, function (err, items) {
         response.json(items);
     });
 });
@@ -123,4 +126,12 @@ db.connect();
 
 app.listen(3000, function () {
     console.log('Listening on port 3000');
+    
+    /*var pur= {supplierName: 'FARMAGAR', invoiceDate: 1444626000000, invoiceNumber: '1', products: []};
+
+    for (i = 0; i < 3000; i++) {
+        pur.products.unshift({name: 'Product '+i, cost: 1, qty: 1, price: 1.72, expirationDate: '', purchases: []});
+        };
+
+    products.savePurchase(pur, 'ogarciacar');*/
 });

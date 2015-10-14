@@ -21,15 +21,43 @@
                 stock.totalToSell = 0;
                 stock.totalExpenses = 0;
                 stock.phraseToSearch = '';
-        
+                
+                stock.more = true;
+                
                 this.showProducts = function() {
-                    $http.get('/products').success( function ( data ) {
+                    stock.lowerLimit = 0;
+                    stock.upperLimit = 25;
+                    
+                    var urlToLoad = '/products/'+stock.lowerLimit+'/'+ stock.upperLimit; 
+                    
+                    $http.get(urlToLoad).success( function ( data ) {
                         stock.totalToSell = 0;
                         stock.totalExpenses = 0;
                         stock.products = data;
+                        if (data.length < 25) stock.more = false;
+                        else stock.more = true;
                     });    
                 };
-        
+                
+                this.showMore = function () {
+                    
+                    stock.lowerLimit += 25;
+                    stock.upperLimit += 25;
+                    
+                    var urlToLoad = '/products/'+stock.lowerLimit+'/'+ stock.upperLimit; 
+                    
+                    $http.get(urlToLoad).success( function ( data ) {
+                        stock.totalToSell = 0;
+                        stock.totalExpenses = 0;
+                        
+                        if (data.length > 0)
+                        stock.products = stock.products.concat(data);
+                        
+                        if (data.length < 25) stock.more = false;
+                        else stock.more = true;
+                    });
+                };
+                
                 this.addToTotal = function (product) {
                     stock.totalToSell += product.qty * product.price;
                     stock.totalExpenses += product.qty * product.cost;
@@ -37,14 +65,15 @@
                 };
                 
                 this.search = function (text) {
-                    if (text.length > 0) {
+                    if (text.length > 1) {
+                        stock.more = false;
                         $http.get('/search/'+text).success( function ( data ) {
                             stock.totalToSell = 0;
                             stock.totalExpenses = 0;
                             stock.products = data;
                         });
                     } else {
-                        this.showProducts();
+                        this.showProducts();                        
                     }
                 };
             }],
