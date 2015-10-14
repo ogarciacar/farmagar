@@ -22,7 +22,7 @@
                 stock.totalExpenses = 0;
                 stock.phraseToSearch = '';
                 
-                stock.more = true;
+                stock.more = false;
                 
                 this.showProducts = function() {
                     stock.lowerLimit = 0;
