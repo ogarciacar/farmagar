@@ -42,7 +42,7 @@
                 this.showMore = function () {
                     
                     stock.lowerLimit += 25;
-                    stock.upperLimit += 25;
+                    stock.upperLimit = 25;
                     
                     var urlToLoad = '/products/'+stock.lowerLimit+'/'+ stock.upperLimit; 
                     
