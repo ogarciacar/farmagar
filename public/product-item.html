@@ -1,6 +1,6 @@
 
 <td>
-    <a ng-show="loginCtrl.user" role="button" class="btn btn-xs" data-toggle="modal" data-target="#updateName{{$index}}">{{product.name| limitTo:55}}</a><p ng-hide="loginCtrl.user" class="text-primary btn-xs">{{product.name| limitTo:55}}</p><br ng-show="loginCtrl.user"/><button type="button" ng-show="loginCtrl.user" 
+    <a ng-show="loginCtrl.user" role="button" class="btn btn-xs" title="{{product.name}}" data-toggle="modal" data-target="#updateName{{$index}}">{{product.name| limitTo:55}}</a><p ng-hide="loginCtrl.user" title="{{product.name}}" class="text-primary btn-xs">{{product.name| limitTo:55}}</p><br ng-show="loginCtrl.user"/><button type="button" ng-show="loginCtrl.user" 
                 class="btn btn-default btn-xs ng-class: {disabled:item.isExpired(product.expirationDate) || item.isSoldOut(product.qty)}" 
                 data-toggle="modal" data-target="#sale{{(item.isExpired(product.expirationDate) || item.isSoldOut(product.qty))?'':product.serialNumber}}">Registrar venta</button><button ng-show="loginCtrl.user" type="button" class="btn btn-link btn-xs hidden-sm hidden-xs" data-toggle="modal" data-target="#myModal{{product.serialNumber}}">Ver compras</button>
 <span class="label label-danger" ng-show="loginCtrl.user && item.isExpired(product.expirationDate)">Expirado</span>
@@ -14,7 +14,7 @@
 <td ng-show="loginCtrl.user">{{product.qty}}</td>
 <td>{{product.price | currency}}</td>
 <td ng-show="loginCtrl.user" class="hidden-xs">{{product.qty * product.price | currency}}</td>
-
+<script>$("#tooltip{{$index}}").tooltip()</script>
 <update-name></update-name>
 <sale-form></sale-form>
 <section ng-include="'historical-purchases.html'"></section>
