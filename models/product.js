@@ -24,7 +24,7 @@ exports.searchOnSuppliers = function (phraseToMatch, done) {
     
     var matchCriteria = '*' + phraseToMatch.toUpperCase() + '*';
     
-    var stream = db.get().sscanStream('product:suppliers', { match: matchCriteria});
+    var stream = db.get().sscanStream('product:suppliers', { match: matchCriteria, count: 500 });
     
     stream.on('data', function (suppliers) {
         done (null, suppliers);
