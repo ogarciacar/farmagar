@@ -1,6 +1,8 @@
 var express = require('express');
 var	cookieParser = require('cookie-parser');
 var	session	= require('express-session');
+var favicon = require('serve-favicon');
+
 var app = express();
 var bodyParser = require('body-parser');	
 var parseUrlencoded = bodyParser.urlencoded({ extended: true }); // for parsing       application/x-www-form-urlencoded
@@ -12,7 +14,7 @@ var sales = require('./models/sale');
 var auth = require('./middleware/authentication');
 
 
-
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(bodyParser.json()); // for parsing application/json
 
 app.use(cookieParser('cool secret session'));
