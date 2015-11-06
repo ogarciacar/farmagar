@@ -78,8 +78,6 @@
                 
                 report.until = $("#until").val();
                 
-                
-                
                 this.addToTotal = function (sale) {
                     report.totalSales += sale.amount;
                     return sale.date;

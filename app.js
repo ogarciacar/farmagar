@@ -70,8 +70,26 @@ app.get('/sales/:since/:until', function(request, response) {
     
     var until = request.params.until;
     
+    var months = {0:"Enero", 1:"Febrero", 2:"Marzo", 3:"Abril", 4:"Mayo", 5:"Junio", 
+                              6:"Julio", 7:"Agosto", 8:"Septiembre", 9:"Octubre", 10:"Noviembre", 11:"Diciembre"};
+    
     sales.salesReport(since, until, function (err, salesReport) {
-        response.json(salesReport);
+        
+        var currentMonth = null;
+        var sales = [];
+        for (i = 0; i < salesReport.length; i++) {
+            var d = new Date(salesReport[i].date);
+            var m = months[d.getMonth()] + ' ' + d.getFullYear();
+            if (currentMonth != m) {
+                currentMonth = m;
+                sales.push({isBreak:true, amount:0, month:currentMonth, date: new Date(d.getFullYear(), d.getMonth(), d.getDate())});
+            }
+            
+            sales.push(salesReport[i]);
+        }
+        
+        
+        response.json(sales);
     });
 });
 

@@ -40,12 +40,13 @@
             
             <tbody ng-show="salesCtrl.sales.length > 0">
             <tr ng-repeat="sale in salesCtrl.sales track by salesCtrl.addToTotal(sale)">
-                <td class="text-primary btn-xs" title="{{sale.product}}">{{sale.product | limitTo:55}}</td>
-                <td>{{sale.date | date:'dd/MM/yyyy'}}</td>
-                <td class="hidden-xs">{{sale.seller}}</td>
-                <td class="hidden-xs">{{sale.qty}}</td>
-                <td class="hidden-xs">{{sale.discount}}</td>
-                <td>{{sale.amount | currency}}</td>
+                <td class="text-muted" colspan="6" title="{{sale.product}}" ng-show="sale.isBreak && !loginCtrl.isSalesUser(loginCtrl.user.profile)"><h4>{{sale.month}}</h4></td>
+                <td class="text-primary btn-xs" title="{{sale.product}}" ng-hide="sale.isBreak">{{sale.product | limitTo:55}}</td>
+                <td ng-hide="sale.isBreak">{{sale.date | date:'dd/MM/yyyy'}}</td>
+                <td class="hidden-xs" ng-hide="sale.isBreak">{{sale.seller}}</td>
+                <td class="hidden-xs" ng-hide="sale.isBreak">{{sale.qty}}</td>
+                <td class="hidden-xs" ng-hide="sale.isBreak">{{sale.discount}}</td>
+                <td ng-hide="sale.isBreak">{{sale.amount | currency}}</td>
             </tr>
             </tbody>            
             </table>
