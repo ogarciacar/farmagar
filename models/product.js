@@ -96,7 +96,7 @@ exports.savePurchase = function ( purchase, username ) {
                     var toUpdate = JSON.parse(p);
                     toUpdate.qty += product.qty;
                     if (product.expirationDate === '' || toUpdate.expirationDate === '' || 
-                        toUpdate.expirationDate > product.expirationDate) toUpdate.expirationDate = product.expirationDate;
+                        toUpdate.expirationDate < product.expirationDate) toUpdate.expirationDate = product.expirationDate;
                     if (toUpdate.cost < product.cost) toUpdate.cost = product.cost;
                     if (toUpdate.price < product.price) toUpdate.price = product.price;
                     toUpdate.purchases = product.purchases.concat(toUpdate.purchases);
