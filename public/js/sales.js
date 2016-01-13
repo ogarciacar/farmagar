@@ -72,7 +72,10 @@
                 report.sales = [ ];
         
                 report.totalSales = 0;
-        
+                
+                report.month = {};
+                
+                report.currentMonth = null;
                 
                 report.since = $("#since").val();
                 
@@ -80,6 +83,14 @@
                 
                 this.addToTotal = function (sale) {
                     report.totalSales += sale.amount;
+                    
+                    if (sale.isBreak) {
+                        report.currentMonth = sale.month;
+                        report.month[report.currentMonth] = 0;
+                    }
+                    
+                    report.month[report.currentMonth] += sale.amount;
+                    
                     return sale.date;
                 };
         
